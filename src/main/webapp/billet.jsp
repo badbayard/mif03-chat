@@ -3,8 +3,17 @@
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.Billet" %>
 <%! private Billet billet = new Billet(); %>
 <% if (request.getMethod().equals("POST")) {
-    billet.setContenu(request.getParameter("contenu"));
-    billet.setTitre(request.getParameter("titre"));
+    String contenu  = request.getParameter("contenu");
+    String titre  = request.getParameter("titre");
+    if(contenu != null && !contenu.equals("")) {
+        session.setAttribute("contenu", contenu);
+    }
+    if (titre != null && !titre.equals("")) {
+        session.setAttribute("titre", titre);
+    }
+
+    billet.setContenu((String) session.getAttribute("contenu"));
+    billet.setTitre((String) session.getAttribute("titre"));
     billet.setAuteur((String) session.getAttribute("pseudo"));
 } %>
 <!doctype html>
@@ -35,8 +44,6 @@ if (request.getMethod().equals("POST"))
 
 }
 %>
-
-
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco">Se déconnecter</a></p>
