@@ -25,6 +25,19 @@
         <input type="submit" value="Envoyer">
     </p>
 </form>
+<%
+if (request.getMethod().equals("POST"))
+{
+    billet.addcomments(request.getParameter("commentaire"));
+    for(String m : billet.getCommentaires()) {
+        out.println("<p>" + m + "</p>");
+    }
+
+}
+%>
+
+
+
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco">Se déconnecter</a></p>
 
