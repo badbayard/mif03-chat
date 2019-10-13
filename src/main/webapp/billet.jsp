@@ -4,9 +4,16 @@
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.GestionBillets" %>
 <%! private Billet billet = new Billet();
     private static GestionBillets gestion = new GestionBillets();
-
 %>
-<% if (request.getMethod().equals("POST")) {
+<%
+
+    if(session.getAttribute("pseudo") == null) {
+        session.invalidate();
+        response.sendRedirect("index.html");
+        return;
+    }
+
+    if (request.getMethod().equals("POST")) {
     String contenu  = request.getParameter("contenu");
     String titre  = request.getParameter("titre");
     boolean add = false;
@@ -52,13 +59,13 @@
 </form>
 <%
 
-    for(String m : billet.getCommentaires()) {
-        out.println("<p>" + m + "</p>");
-    }
+for(String m : billet.getCommentaires()) {
+   out.println("<p>" + m + "</p>");
+}
 
 out.println("<h3> print gestion billet </h3>");
 for (Billet b : gestion.getBillets()){
-    out.println("<p>" +b.getAuteur()+ " : " +b.getTitre() +" : " + b.getContenu() + " taille : " + gestion.getBillets().size()+ " </p>");
+    out.println("<h4>" +b.getAuteur()+ " : " +b.getTitre() +" : " + b.getContenu() + " taille : " + gestion.getBillets().size()+ " </h4>");
 
 }
 

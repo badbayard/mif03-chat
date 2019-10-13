@@ -11,16 +11,11 @@ import java.io.IOException;
 @WebServlet(name = "Deco", urlPatterns = "/Deco")
 public class Deco extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("index.html");
-        if (request.getParameter("Deco") != null) {
-            HttpSession session=request.getSession();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
             session.invalidate();
         }
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect("index.html");
-
     }
 }

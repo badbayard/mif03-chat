@@ -23,9 +23,7 @@ public class Init extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.sendRedirect("index.html");
-
-
+        request.getRequestDispatcher("billet.jsp").forward(request, response);
     }
 
 
