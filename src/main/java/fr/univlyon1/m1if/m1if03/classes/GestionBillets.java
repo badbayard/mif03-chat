@@ -9,7 +9,17 @@ public class GestionBillets {
         this.billets = new ArrayList<>();
     }
 
+    public List<Billet> getBillets() {
+        return billets;
+    }
+
+    public void setBillets(List<Billet> billets) {
+        this.billets = billets;
+    }
+
+
     public void add(Billet billet) {
+
         this.billets.add(billet);
     }
 
