@@ -16,6 +16,7 @@
     if (request.getMethod().equals("POST")) {
     String contenu  = request.getParameter("contenu");
     String titre  = request.getParameter("titre");
+    String commentaire = request.getParameter("commentaire");
     boolean add = false;
     if(contenu != null && !contenu.equals("")) {
         session.setAttribute("contenu", contenu);
@@ -27,10 +28,14 @@
     }
 
 
-    billet.setContenu((String) session.getAttribute("contenu"));
     billet.setTitre((String) session.getAttribute("titre"));
+    billet.setContenu((String) session.getAttribute("contenu"));
     billet.setAuteur((String) session.getAttribute("pseudo"));
-    billet.addcomments(request.getParameter("commentaire"));
+
+    if(commentaire != null  && !commentaire.equals("")) {
+            billet.addcomments(commentaire);
+    }
+
 
     if (add) {
         gestion.add(billet);
@@ -63,13 +68,16 @@ for(String m : billet.getCommentaires()) {
    out.println("<p>" + m + "</p>");
 }
 
-out.println("<h3> print gestion billet </h3>");
+out.println("<div class= 'vertical-menu' >");
 for (Billet b : gestion.getBillets()){
-    out.println("<h4>" +b.getAuteur()+ " : " +b.getTitre() +" : " + b.getContenu() + " taille : " + gestion.getBillets().size()+ " </h4>");
+    if(b.getTitre() == billet.getTitre()) {
+        out.println(" <a href='#' class='active'>" + b.getTitre() +"</a>");
+    } else {
+        out.println(" <a href='#'>" + b.getTitre() +"</a>");
+    }
 
 }
-
-
+out.println("</div>");
 
 %>
 
@@ -78,3 +86,29 @@ for (Billet b : gestion.getBillets()){
 
 </body>
 </html>
+
+
+<style>
+    .vertical-menu {
+        width: 200px;
+        height: 150px;
+        overflow-y: auto;
+    }
+
+    .vertical-menu a {
+        background-color: #eee; /* Grey background color */
+        color: black; /* Black text color */
+        display: block; /* Make the links appear below each other */
+        padding: 12px; /* Add some padding */
+        text-decoration: none; /* Remove underline from links */
+    }
+
+    .vertical-menu a:hover {
+        background-color: #ccc; /* Dark grey background on mouse-over */
+    }
+
+    .vertical-menu a.active {
+        background-color: #4CAF50; /* Add a green color to the "active/current" link */
+        color: white;
+    }
+</style>
