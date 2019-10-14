@@ -14,10 +14,11 @@ public class Billet {
 
     }
 
-    public Billet(String titre, String contenu, String auteur) {
+    public Billet(String titre, String contenu, String auteur , ArrayList<String> commentaires) {
         this.titre = titre;
         this.contenu = contenu;
         this.auteur = auteur;
+        this.commentaires = commentaires;
     }
 
     public ArrayList<String> getCommentaires() {

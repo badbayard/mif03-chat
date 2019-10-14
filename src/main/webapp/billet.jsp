@@ -11,6 +11,8 @@
         session.invalidate();
         response.sendRedirect("index.html");
         return;
+    } else if (session.getAttribute("pseudo") != billet.getAuteur()) {
+        billet = new Billet();
     }
 
     if (request.getMethod().equals("POST")) {
@@ -18,27 +20,24 @@
     String titre  = request.getParameter("titre");
     String commentaire = request.getParameter("commentaire");
     boolean add = false;
-    if(contenu != null && !contenu.equals("")) {
-        session.setAttribute("contenu", contenu);
-        add = true;
-    }
     if (titre != null && !titre.equals("")) {
-        session.setAttribute("titre", titre);
+        billet.setTitre(titre);
+        add = true;
+    }
+    if(contenu != null && !contenu.equals("")) {
+        billet.setContenu(contenu);
         add = true;
     }
 
-
-    billet.setTitre((String) session.getAttribute("titre"));
-    billet.setContenu((String) session.getAttribute("contenu"));
     billet.setAuteur((String) session.getAttribute("pseudo"));
 
     if(commentaire != null  && !commentaire.equals("")) {
             billet.addcomments(commentaire);
     }
 
-
     if (add) {
-        gestion.add(billet);
+        Billet b2 = new Billet(billet.getTitre(), billet.getContenu() , billet.getAuteur() , billet.getCommentaires());
+        gestion.add(b2);
     }
 
 
@@ -68,18 +67,24 @@ for(String m : billet.getCommentaires()) {
    out.println("<p>" + m + "</p>");
 }
 
-out.println("<div class= 'vertical-menu' >");
-for (Billet b : gestion.getBillets()){
-    if(b.getTitre() == billet.getTitre()) {
-        out.println(" <a href='#' class='active'>" + b.getTitre() +"</a>");
+out.println("<div  class= 'vertical-menu' >");
+for (int i = 0 ; i < gestion.getBillets().size() ; i++){
+    Billet b = gestion.getBillet(i);
+    if(b.getTitre().equals(billet.getTitre())) {
+        out.println(" <a href='billet.jsp' value =" + i +" class='active'>" + b.getTitre() +"</a>");
     } else {
-        out.println(" <a href='#'>" + b.getTitre() +"</a>");
+        out.println(" <a href='billet.jsp' value =" + i +">" + b.getTitre() +"</a>");
     }
 
 }
 out.println("</div>");
 
 %>
+
+
+
+
+
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco">Se déconnecter</a></p>
