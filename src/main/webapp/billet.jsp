@@ -67,22 +67,30 @@ for(Message m : billet.getCommentaires()) {
    out.println("<p>" + m.toString() + "</p>");
 }
 
-out.println("<div  class= 'vertical-menu' >");
-for (int i = 0 ; i < gestion.getBillets().size() ; i++){
-    Billet b = gestion.getBillet(i);
-    if(b.getTitre().equals(billet.getTitre())) {
-        out.println(" <a href='billet.jsp' value =" + i +" class='active'>" + b.getTitre() +"</a>");
-    } else {
-        out.println(" <a href='billet.jsp' value =" + i +">" + b.getTitre() +"</a>");
-    }
-
-}
-out.println("</div>");
-
 %>
 
 
+<form action="billet.jsp">
+    <select name="menu">
+<%
+        for (int i = 0 ; i < gestion.getBillets().size() ; i++) {
+            Billet b = gestion.getBillet(i);
+            out.println("<option value=" + i + ">" + b.getTitre() + " </option>");
+        }
+%>
 
+        <!--option value="Java">Java</option>
+        <option value="PHP">PHP</option>
+        <option value="Python">Python</option!-->
+    </select>
+    <input type="submit" Value="Get"/>
+</form>
+
+<%
+    if(request.getParameter("menu") != null) {
+        out.println("<p>" + request.getParameter("menu") + "<p>" );
+    }
+%>
 
 
 
@@ -93,27 +101,3 @@ out.println("</div>");
 </html>
 
 
-<style>
-    .vertical-menu {
-        width: 200px;
-        height: 150px;
-        overflow-y: auto;
-    }
-
-    .vertical-menu a {
-        background-color: #eee; /* Grey background color */
-        color: black; /* Black text color */
-        display: block; /* Make the links appear below each other */
-        padding: 12px; /* Add some padding */
-        text-decoration: none; /* Remove underline from links */
-    }
-
-    .vertical-menu a:hover {
-        background-color: #ccc; /* Dark grey background on mouse-over */
-    }
-
-    .vertical-menu a.active {
-        background-color: #4CAF50; /* Add a green color to the "active/current" link */
-        color: white;
-    }
-</style>
