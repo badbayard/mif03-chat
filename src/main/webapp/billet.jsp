@@ -7,14 +7,15 @@
     private static GestionBillets gestion = new GestionBillets();
 %>
 <%
-
     if(session.getAttribute("pseudo") == null) {
         session.invalidate();
         response.sendRedirect("index.html");
         return;
-    } else if (session.getAttribute("pseudo") != billet.getAuteur()) {
+    } /*else if (session.getAttribute("pseudo") != billet.getAuteur()) {
         billet = new Billet();
-    }
+        // relou a cause de ca toto et titi ne peuvent pas parler sur le meme billet et toto est vouer a faire des monologues mais pas trouver
+        // d'autres moyens pour remettre a zero la page des billets a la connexion
+    }*/
 
     if (request.getMethod().equals("POST")) {
     String contenu  = request.getParameter("contenu");
@@ -23,13 +24,19 @@
     boolean add = false;
     if (titre != null && !titre.equals("") || contenu != null && !contenu.equals("")) {
         billet = new Billet();
-        billet.setTitre(titre);
-        billet.setContenu(contenu);
+        if(billet.getTitre().equals("Rien")) {
+            billet.setTitre(titre);
+        }
+        if(billet.getContenu().equals("Vide")){
+            billet.setContenu(contenu);
+        }
         add = true;
     }
 
+    if(billet.getAuteur().equals("Personne")) {
+        billet.setAuteur((String) session.getAttribute("pseudo"));
+    }
 
-    billet.setAuteur((String) session.getAttribute("pseudo"));
 
     if(commentaire != null  && !commentaire.equals("")) {
             billet.addComments((String) session.getAttribute("pseudo") , commentaire);
@@ -41,7 +48,11 @@
     }
 
 
-} %>
+} else if(request.getParameter("menu") != null) {
+        int indice = Integer.parseInt(request.getParameter("menu"));
+        billet = gestion.getBillet(indice);
+    }
+%>
 <!doctype html>
 <html>
 <head>
@@ -84,21 +95,6 @@ if(gestion.getBillets().size() > 0) {
     out.println("</form>");
 }
 %>
-
-<%
-    if(request.getParameter("menu") != null) {
-        out.println("<p>" + request.getParameter("menu") + "<p>" );
-        int indice = Integer.parseInt(request.getParameter("menu"));
-        billet = gestion.getBillet(indice);
-
-        out.println("<h2>Hello " + session.getAttribute("pseudo") +" !</h2>");
-        out.println("<p>Ceci est un billet de " + billet.getAuteur() +"</p>");
-        out.println("<h1>"+ billet.getTitre() + "</h1>");
-        out.println("<div class='contenu'>" + billet.getContenu() + "</div>");
-    }
-%>
-
-
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco">Se déconnecter</a></p>

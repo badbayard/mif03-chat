@@ -28,8 +28,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return pseudo + " : " + message ;
+        return pseudo + " : " + message;
     }
-
-
 }
