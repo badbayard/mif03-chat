@@ -69,26 +69,32 @@ for(Message m : billet.getCommentaires()) {
 
 %>
 
-
-<form action="billet.jsp">
-    <select name="menu">
 <%
-        for (int i = 0 ; i < gestion.getBillets().size() ; i++) {
-            Billet b = gestion.getBillet(i);
-            out.println("<option value=" + i + ">" + b.getTitre() + " </option>");
-        }
-%>
+if(gestion.getBillets().size() > 0) {
+    out.println("<form action='billet.jsp'>");
+    out.println("<select name='menu'>");
 
-        <!--option value="Java">Java</option>
-        <option value="PHP">PHP</option>
-        <option value="Python">Python</option!-->
-    </select>
-    <input type="submit" Value="Get"/>
-</form>
+    for (int i = 0; i < gestion.getBillets().size(); i++) {
+        Billet b = gestion.getBillet(i);
+        out.println("<option value=" + i + ">" + b.getTitre() + " </option>");
+    }
+
+    out.println("</select>");
+    out.println("<input type='submit' Value='Get'/>");
+    out.println("</form>");
+}
+%>
 
 <%
     if(request.getParameter("menu") != null) {
         out.println("<p>" + request.getParameter("menu") + "<p>" );
+        int indice = Integer.parseInt(request.getParameter("menu"));
+        billet = gestion.getBillet(indice);
+
+        out.println("<h2>Hello " + session.getAttribute("pseudo") +" !</h2>");
+        out.println("<p>Ceci est un billet de " + billet.getAuteur() +"</p>");
+        out.println("<h1>"+ billet.getTitre() + "</h1>");
+        out.println("<div class='contenu'>" + billet.getContenu() + "</div>");
     }
 %>
 
