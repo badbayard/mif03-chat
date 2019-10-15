@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Billet {
     private String titre, contenu, auteur;
-    private ArrayList<String> commentaires;
+    private ArrayList<Message> commentaires;
 
     public Billet() {
         this.titre = "Rien";
@@ -14,19 +14,20 @@ public class Billet {
 
     }
 
-    public Billet(String titre, String contenu, String auteur , ArrayList<String> commentaires) {
+    public Billet(String titre, String contenu, String auteur , ArrayList<Message> commentaires) {
         this.titre = titre;
         this.contenu = contenu;
         this.auteur = auteur;
         this.commentaires = commentaires;
     }
 
-    public ArrayList<String> getCommentaires() {
+    public ArrayList<Message> getCommentaires() {
         return commentaires;
     }
 
-    public void addcomments(String str){
-        commentaires.add(str);
+    public void addComments(String pseudo ,String message){
+        Message m = new Message(pseudo , message);
+        commentaires.add(m);
     }
 
     public String getTitre() {

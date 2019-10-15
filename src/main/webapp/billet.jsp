@@ -2,6 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.Billet" %>
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.GestionBillets" %>
+<%@ page import="fr.univlyon1.m1if.m1if03.classes.Message" %>
 <%! private Billet billet = new Billet();
     private static GestionBillets gestion = new GestionBillets();
 %>
@@ -20,19 +21,18 @@
     String titre  = request.getParameter("titre");
     String commentaire = request.getParameter("commentaire");
     boolean add = false;
-    if (titre != null && !titre.equals("")) {
+    if (titre != null && !titre.equals("") || contenu != null && !contenu.equals("")) {
+        billet = new Billet();
         billet.setTitre(titre);
-        add = true;
-    }
-    if(contenu != null && !contenu.equals("")) {
         billet.setContenu(contenu);
         add = true;
     }
 
+
     billet.setAuteur((String) session.getAttribute("pseudo"));
 
     if(commentaire != null  && !commentaire.equals("")) {
-            billet.addcomments(commentaire);
+            billet.addComments((String) session.getAttribute("pseudo") , commentaire);
     }
 
     if (add) {
@@ -63,8 +63,8 @@
 </form>
 <%
 
-for(String m : billet.getCommentaires()) {
-   out.println("<p>" + m + "</p>");
+for(Message m : billet.getCommentaires()) {
+   out.println("<p>" + m.toString() + "</p>");
 }
 
 out.println("<div  class= 'vertical-menu' >");
