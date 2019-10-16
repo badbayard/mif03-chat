@@ -5,19 +5,18 @@
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.Message" %>
 <%! private Billet billet = new Billet();
     private static GestionBillets gestion = new GestionBillets();
+    private  String groupe ;
 %>
 
 <%
-    response.setIntHeader("Refresh", 10);
+        groupe = (String) session.getAttribute("groupe");
+        gestion.addgroupe(groupe);
+
+    //response.setIntHeader("Refresh", 5);
     if(session.getAttribute("pseudo") == null) {
         session.invalidate();
         response.sendRedirect("index.html");
         return;
-    } else if (session.getAttribute("pseudo") != billet.getAuteur()) {
-      // billet = new Billet();
-
-        // relou a cause de ca toto et titi ne peuvent pas parler sur le meme billet et toto est vouer a faire des monologues mais pas trouver
-        // d'autres moyens pour remettre a zero la page des billets a la connexion
     }
 
     if (request.getMethod().equals("POST")) {
@@ -47,19 +46,19 @@
 
     if (add) {
         Billet b2 = new Billet(billet.getTitre(), billet.getContenu() , billet.getAuteur() , billet.getCommentaires());
-        gestion.add(b2);
+        gestion.addbillet(b2,groupe);
     }
 
 
 } else if(request.getParameter("menu") != null) {
         int indice = Integer.parseInt(request.getParameter("menu"));
-        billet = gestion.getBillet(indice);
+        billet = gestion.getBillet(groupe, indice);
     }
 %>
 <!doctype html>
 <html>
 <head>
-   <!-- <meta http-equiv="refresh" content="5"/> -->
+    <meta http-equiv="refresh" content="5"/>
     <title>Billet</title>
 </head>
 <body>
@@ -84,12 +83,12 @@ for(Message m : billet.getCommentaires()) {
 %>
 
 <%
-if(gestion.getBillets().size() > 0) {
+if(gestion.getBillets(groupe).size() > 0) {
     out.println("<form action='billet.jsp'>");
     out.println("<select name='menu'>");
 
-    for (int i = 0; i < gestion.getBillets().size(); i++) {
-        Billet b = gestion.getBillet(i);
+    for (int i = 0; i < gestion.getBillets(groupe).size(); i++) {
+        Billet b = gestion.getBillet(groupe, i);
         out.println("<option value=" + i + ">" + b.getTitre() + " </option>");
     }
 
@@ -99,7 +98,7 @@ if(gestion.getBillets().size() > 0) {
 }
 %>
 
-
+<% out.println("<p>" + groupe + "</p>"); %>
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco">Se déconnecter</a></p>

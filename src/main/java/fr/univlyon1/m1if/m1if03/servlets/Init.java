@@ -17,8 +17,8 @@ public class Init extends HttpServlet {
         if(pseudo != null && !pseudo.equals("")) {
             HttpSession session = request.getSession(true);
             session.setAttribute("pseudo", pseudo);
+            session.setAttribute("groupe",groupe); // <----- groupe
             request.getRequestDispatcher("billet.jsp").forward(request, response);
-            session.setAttribute("groupe",groupe);
         } else {
             response.sendRedirect("index.html");
         }

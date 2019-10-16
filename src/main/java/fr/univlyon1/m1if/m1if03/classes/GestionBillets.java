@@ -1,35 +1,33 @@
 package fr.univlyon1.m1if.m1if03.classes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GestionBillets {
-    private List<Billet> billets;
+    private HashMap<String, ArrayList<Billet>> billets;
     public GestionBillets() {
-        this.billets = new ArrayList<>();
+        billets = new HashMap<>();
     }
 
-    public List<Billet> getBillets() {
-        return billets;
+    public Billet getBillet(String groupe,int indice) {
+        return billets.get(groupe).get(indice);
     }
 
-    public void setBillets(List<Billet> billets) {
-        this.billets = billets;
+    public ArrayList<Billet> getBillets(String groupe) {
+        return billets.get(groupe);
     }
 
-
-    public void add(Billet billet) {
-
-        this.billets.add(billet);
+    public void addgroupe(String groupe){
+        if(!billets.containsKey((groupe))){
+            ArrayList<Billet> listegroupe = new ArrayList<>();
+            billets.put(groupe,listegroupe);
+        }
     }
 
-    public Billet getBillet(int i) {
-        return billets.get(i);
+    public void addbillet(Billet billet , String groupe){
+        Billet newBillet = new Billet(billet.getTitre(),billet.getContenu(),billet.getAuteur(),billet.getCommentaires());
+        billets.get(groupe).add(newBillet);
     }
 
-    public Billet getLastBillet(int i) {
-        if (billets.size() > 0)
-            return this.getBillet(billets.size() -1);
-        throw new IndexOutOfBoundsException("Erreur dans l'appel à la fonction getLastBillet");
-    }
 }
