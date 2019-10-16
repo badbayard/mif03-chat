@@ -6,16 +6,19 @@
 <%! private Billet billet = new Billet();
     private static GestionBillets gestion = new GestionBillets();
 %>
+
 <%
+    response.setIntHeader("Refresh", 10);
     if(session.getAttribute("pseudo") == null) {
         session.invalidate();
         response.sendRedirect("index.html");
         return;
-    } /*else if (session.getAttribute("pseudo") != billet.getAuteur()) {
-        billet = new Billet();
+    } else if (session.getAttribute("pseudo") != billet.getAuteur()) {
+      // billet = new Billet();
+
         // relou a cause de ca toto et titi ne peuvent pas parler sur le meme billet et toto est vouer a faire des monologues mais pas trouver
         // d'autres moyens pour remettre a zero la page des billets a la connexion
-    }*/
+    }
 
     if (request.getMethod().equals("POST")) {
     String contenu  = request.getParameter("contenu");
@@ -56,7 +59,7 @@
 <!doctype html>
 <html>
 <head>
-    <meta http-equiv="refresh" content="5"/>
+   <!-- <meta http-equiv="refresh" content="5"/> -->
     <title>Billet</title>
 </head>
 <body>
@@ -95,6 +98,8 @@ if(gestion.getBillets().size() > 0) {
     out.println("</form>");
 }
 %>
+
+
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco">Se déconnecter</a></p>
