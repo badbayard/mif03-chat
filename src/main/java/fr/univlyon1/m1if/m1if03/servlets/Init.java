@@ -1,6 +1,9 @@
 package fr.univlyon1.m1if.m1if03.servlets;
 
 
+import fr.univlyon1.m1if.m1if03.classes.Groupe;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 
 @WebServlet(name = "Init", urlPatterns = "/Init")
 public class Init extends HttpServlet {
@@ -31,9 +35,9 @@ public class Init extends HttpServlet {
     }
 
 
-
-
-
-
-
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        HashMap<String, Groupe> toto = new HashMap<>();
+    }
 }
