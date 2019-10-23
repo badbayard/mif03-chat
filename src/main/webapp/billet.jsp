@@ -3,10 +3,15 @@
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.Billet" %>
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.GestionBillets" %>
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.Message" %>
+<%@ page import="fr.univlyon1.m1if.m1if03.classes.Groupe" %>
+<%@ page import="java.util.HashMap" %>
 <%! private Billet billet = new Billet();
     private static GestionBillets gestion = new GestionBillets();
     private  String groupe ;
 %>
+
+
+
 <%
 
         groupe = (String) session.getAttribute("groupe");
@@ -99,6 +104,20 @@ if(gestion.getBillets(groupe).size() > 0) {
 %>
 
 <% out.println("<p>" + groupe + "</p>"); %>
+
+
+
+<%
+HashMap<String, Groupe> g2 = (HashMap<String, Groupe>)request.getServletContext().getAttribute("g");
+out.println("<p>" + g2.size()+ "</p>");
+out.println("<p>" + g2.get("test").getNom()+ "</p>");
+/*
+(HashMap<String, Groupe>) ((HashMap<String, Groupe>) request.getServletContext().getAttribute("g"))
+        .put("test2",new Groupe ("test2", "test2", "test2"));
+*/
+((HashMap<String, Groupe>) request.getServletContext().getAttribute("g")).put("test2",new Groupe ("test2", "test2", "test2"));
+    out.println("<p>" + g2.get("test2").getNom()+ "</p>");
+%>
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco">Se déconnecter</a></p>
