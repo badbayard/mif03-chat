@@ -1,6 +1,6 @@
 package fr.univlyon1.m1if.m1if03.classes;
 
-import java.sql.Array;
+
 import java.util.ArrayList;
 
 public class Groupe {
@@ -8,11 +8,16 @@ public class Groupe {
     private String description;
     private String proprietaire;
     private ArrayList<String> participants;
-    GestionBillets gestion;
+    private GestionBillets gestion;
+
+    public Groupe(){
+         this.participants = new ArrayList<>();
+         this.gestion = new GestionBillets();
+    }
 
     public Groupe(String nom,String description, String proprietaire){
-        participants = new ArrayList<>();
-        gestion = new GestionBillets();
+        this.participants = new ArrayList<>();
+        this.gestion = new GestionBillets();
         this.nom = nom ;
         this.description = description;
         this.proprietaire = proprietaire;
@@ -56,4 +61,6 @@ public class Groupe {
     public void setGestion(GestionBillets gestion) {
         this.gestion = gestion;
     }
+
+
 }

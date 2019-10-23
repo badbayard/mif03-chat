@@ -7,8 +7,8 @@
     private static GestionBillets gestion = new GestionBillets();
     private  String groupe ;
 %>
-
 <%
+
         groupe = (String) session.getAttribute("groupe");
         gestion.addgroupe(groupe);
 
