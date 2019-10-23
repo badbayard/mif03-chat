@@ -5,12 +5,14 @@
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.Message" %>
 <%@ page import="fr.univlyon1.m1if.m1if03.classes.Groupe" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="fr.univlyon1.m1if.m1if03.bean.BilletBean" %>
 <%! private Billet billet = new Billet();
     private static GestionBillets gestion = new GestionBillets();
     private  String groupe ;
 %>
 
 
+<jsp:include page="WEB-INF/Header.jsp" >
 
 <%
 
@@ -69,7 +71,7 @@
 <body>
 <h2>Hello <%= session.getAttribute("pseudo")%> !</h2>
 <p>Ceci est un billet de <%= billet.getAuteur() %></p>
-<h1><c:out value="<%= billet.getTitre()%>"/></h1>
+<h1> ${billet.auteur}</h1>
 <div class="contenu"><%= billet.getContenu()%></div>
 <hr>
 <form method="post" action="billet.jsp">

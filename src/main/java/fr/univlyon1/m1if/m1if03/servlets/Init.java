@@ -40,7 +40,9 @@ public class Init extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("pseudo", pseudo);
             session.setAttribute("groupe",groupe); // <----- groupe
+            //request.setAttribute("BilletBean").forward("");
             request.getRequestDispatcher("billet.jsp").forward(request, response);
+
         } else {
             response.sendRedirect("index.html");
         }
