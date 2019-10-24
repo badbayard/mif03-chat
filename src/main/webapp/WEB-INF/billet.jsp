@@ -9,11 +9,9 @@
 } %>
 <!doctype html>
 <html>
-<head>
-    <title>Billet</title>
-</head>
+<jsp:include page="WEB-INF/header.jsp" ></jsp:include>
 <body>
-<h2>Hello <%= session.getAttribute("pseudo")%> !</h2>
+<h2>Hello <%= session.getAttribute("pseudo") %> !</h2>
 <p>Ceci est un billet de <%= billet.getAuteur() %></p>
 <h1><c:out value="<%= billet.getTitre()%>"/></h1>
 <div class="contenu"><%= billet.getContenu()%></div>
