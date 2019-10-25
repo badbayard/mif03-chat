@@ -22,6 +22,13 @@ public class Groupe {
         this.description = description;
         this.proprietaire = proprietaire;
     }
+
+    public Groupe (String nom) {
+        this.participants = new ArrayList<>();
+        this.gestion = new GestionBillets();
+        this.nom = nom;
+    }
+
     public String getNom() {
         return nom;
     }

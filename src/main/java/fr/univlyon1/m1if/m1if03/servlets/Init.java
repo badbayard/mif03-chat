@@ -34,15 +34,41 @@ public class Init extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+        HttpSession session = request.getSession(true);
         String pseudo = request.getParameter("pseudo");
         String groupe = request.getParameter("groupe");
+
+        HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
+
+
         if(pseudo != null && !pseudo.equals("")) {
-            HttpSession session = request.getSession(true);
             session.setAttribute("pseudo", pseudo);
             session.setAttribute("groupe",groupe); // <----- groupe
             //request.setAttribute("BilletBean").forward("");
-            request.getRequestDispatcher("billet.jsp").forward(request, response);
 
+            if(g.get(pseudo) == null) {
+                System.out.println("g.get(pseudo) == null");
+                //ajout de l'utilisateur
+                g.put(pseudo , new Groupe(groupe));
+            }
+            if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
+                //ajout du groupe
+                System.out.println("g.get(pseudo).getGestion().getBillets(groupe) == null");
+                g.get(pseudo).getGestion().addgroupe(groupe);
+            }
+
+
+            if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
+                //pas de billets pour l'utilisateur
+                System.out.println("g.get(pseudo).getGestion().getBillets(groupe).isEmpty()");
+
+                //request.getRequestDispatcher("WEB-INF/background.jsp").forward(request, response);
+                request.getRequestDispatcher("billet.jsp").forward(request, response);
+
+            } else {
+                request.getRequestDispatcher("billet.jsp").forward(request, response);
+            }
         } else {
             response.sendRedirect("index.html");
         }
