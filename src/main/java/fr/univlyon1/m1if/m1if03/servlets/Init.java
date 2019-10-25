@@ -62,9 +62,7 @@ public class Init extends HttpServlet {
             if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
                 //pas de billets pour l'utilisateur
                 System.out.println("g.get(pseudo).getGestion().getBillets(groupe).isEmpty()");
-
-                //request.getRequestDispatcher("WEB-INF/background.jsp").forward(request, response);
-                request.getRequestDispatcher("billet.jsp").forward(request, response);
+                request.getRequestDispatcher("background.jsp").forward(request, response);
 
             } else {
                 request.getRequestDispatcher("billet.jsp").forward(request, response);
