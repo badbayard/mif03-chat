@@ -34,11 +34,10 @@ public class Init extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
+        System.out.println("yolo");
         HttpSession session = request.getSession(true);
         String pseudo = request.getParameter("pseudo");
         String groupe = request.getParameter("groupe");
-
         HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
 
 
@@ -58,7 +57,6 @@ public class Init extends HttpServlet {
                 g.get(pseudo).getGestion().addgroupe(groupe);
             }
 
-
             if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
                 //pas de billets pour l'utilisateur
                 System.out.println("g.get(pseudo).getGestion().getBillets(groupe).isEmpty()");
@@ -67,6 +65,7 @@ public class Init extends HttpServlet {
             } else {
                 request.getRequestDispatcher("billet.jsp").forward(request, response);
             }
+
         } else {
             response.sendRedirect("index.html");
         }

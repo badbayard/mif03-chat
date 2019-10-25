@@ -15,7 +15,7 @@
 <h1><c:out value="<%= billet.getTitre()%>"/></h1>
 <div class="contenu"><%= billet.getContenu()%></div>
 <hr>
-<form method="post" action="billet.jsp">
+<form method="post" action="Commentaire">
     <p>
         Commentaire :
         <input type="text" name="commentaire">
