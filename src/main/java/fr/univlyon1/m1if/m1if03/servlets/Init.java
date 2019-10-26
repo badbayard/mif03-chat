@@ -2,7 +2,6 @@ package fr.univlyon1.m1if.m1if03.servlets;
 
 
 
-
 import fr.univlyon1.m1if.m1if03.classes.Groupe;
 
 import javax.servlet.ServletConfig;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 
 
@@ -34,12 +32,12 @@ public class Init extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("yolo");
         HttpSession session = request.getSession(true);
         String pseudo = request.getParameter("pseudo");
         String groupe = request.getParameter("groupe");
-        HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
 
+
+        HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
 
         if(pseudo != null && !pseudo.equals("")) {
             session.setAttribute("pseudo", pseudo);
@@ -57,6 +55,7 @@ public class Init extends HttpServlet {
                 g.get(pseudo).getGestion().addgroupe(groupe);
             }
 
+
             if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
                 //pas de billets pour l'utilisateur
                 System.out.println("g.get(pseudo).getGestion().getBillets(groupe).isEmpty()");
@@ -66,18 +65,20 @@ public class Init extends HttpServlet {
                 request.getRequestDispatcher("billet.jsp").forward(request, response);
             }
 
+
         } else {
             response.sendRedirect("index.html");
         }
 
+
+
+
+
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         request.getRequestDispatcher("billet.jsp").forward(request, response);
-        HashMap<String, Groupe> g =(HashMap<String, Groupe>) getServletContext().getAttribute("g");
-        Groupe p = g.get(0);
-        out.println("<h1>"+p.getNom()+"</h1>");
     }
 
 

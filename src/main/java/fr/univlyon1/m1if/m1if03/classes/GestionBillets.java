@@ -11,10 +11,12 @@ public class GestionBillets {
     }
 
     public Billet getBillet(String groupe,int indice) {
+
         return billets.get(groupe).get(indice);
     }
 
     public ArrayList<Billet> getBillets(String groupe) {
+
         return billets.get(groupe);
     }
 
