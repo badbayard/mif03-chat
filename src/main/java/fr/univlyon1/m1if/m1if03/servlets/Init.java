@@ -2,6 +2,8 @@ package fr.univlyon1.m1if.m1if03.servlets;
 
 
 
+import fr.univlyon1.m1if.m1if03.classes.Billet;
+import fr.univlyon1.m1if.m1if03.classes.Billets;
 import fr.univlyon1.m1if.m1if03.classes.Groupe;
 
 import javax.servlet.ServletConfig;
@@ -24,7 +26,6 @@ public class Init extends HttpServlet {
         ServletContext sc = config.getServletContext();
         HashMap<String, Groupe> g = new HashMap<>();
         sc.setAttribute("g",g);
-        g.put("test",new Groupe("test" , "test" , "test"));
     }
 
 
@@ -36,32 +37,38 @@ public class Init extends HttpServlet {
         String pseudo = request.getParameter("pseudo");
         String groupe = request.getParameter("groupe");
 
-
         HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
 
         if(pseudo != null && !pseudo.equals("")) {
             session.setAttribute("pseudo", pseudo);
             session.setAttribute("groupe",groupe); // <----- groupe
-            //request.setAttribute("BilletBean").forward("");
+
 
             if(g.get(pseudo) == null) {
-                System.out.println("g.get(pseudo) == null");
-                //ajout de l'utilisateur
                 g.put(pseudo , new Groupe(groupe));
             }
             if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
                 //ajout du groupe
-                System.out.println("g.get(pseudo).getGestion().getBillets(groupe) == null");
+                //System.out.println("g.get(pseudo).getGestion().getBillets(groupe) == null");
                 g.get(pseudo).getGestion().addgroupe(groupe);
             }
 
 
             if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
                 //pas de billets pour l'utilisateur
-                System.out.println("g.get(pseudo).getGestion().getBillets(groupe).isEmpty()");
                 request.getRequestDispatcher("background.jsp").forward(request, response);
 
             } else {
+                //il existe un billet pour l'utilisateur on le récupere et on l'affiche (on recup le dernier billet par defaut)
+
+                int indiceMax = g.get(pseudo).getGestion().getBillets(groupe).size() - 1;
+                Billet billet = g.get(pseudo).getGestion().getBillet(groupe, indiceMax);
+
+                //menu billet
+                Billets billets = new Billets(g.get(pseudo).getGestion().getBillets(groupe));
+                request.setAttribute("billets",billets);
+
+                request.setAttribute("billet", billet);
                 request.getRequestDispatcher("billet.jsp").forward(request, response);
             }
 
@@ -70,15 +77,11 @@ public class Init extends HttpServlet {
             response.sendRedirect("index.html");
         }
 
-
-
-
-
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("billet.jsp").forward(request, response);
+        //request.getRequestDispatcher("billet.jsp").forward(request, response);
+        response.sendRedirect("index.html");
     }
 
 

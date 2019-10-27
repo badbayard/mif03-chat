@@ -1,13 +1,8 @@
 <jsp:useBean id="billet" scope="request" class="fr.univlyon1.m1if.m1if03.classes.Billet"/>
+<jsp:useBean id="billets" scope="request" class="fr.univlyon1.m1if.m1if03.classes.Billets"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="fr.univlyon1.m1if.m1if03.classes.Billet" %>
-<%! //private Billet billet = new Billet(); %>
-<% if (request.getMethod().equals("POST")) {
-    //billet.setContenu(request.getParameter("contenu"));
-    //billet.setTitre(request.getParameter("titre"));
-    //billet.setAuteur((String) session.getAttribute("pseudo"));
-} %>
+
 <!doctype html>
 <html>
 <jsp:include page="WEB-INF/header.jsp" ></jsp:include>
@@ -29,6 +24,15 @@
         <br/><br/>
 </c:forEach>
 
+
+<form method="post" action = "Menu" >
+    <select id="idMenu" name="menu">
+        <c:forEach items = "${billets.billets}" var = "b" >
+            <option value="${billets.position(b)}">${b.titre}</option>
+        </c:forEach>
+    </select>
+    <input type = "submit" value="Get"/>
+</form>
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco">Se déconnecter</a></p>

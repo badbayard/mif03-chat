@@ -1,6 +1,7 @@
 package fr.univlyon1.m1if.m1if03.servlets;
 
 import fr.univlyon1.m1if.m1if03.classes.Billet;
+import fr.univlyon1.m1if.m1if03.classes.Billets;
 import fr.univlyon1.m1if.m1if03.classes.Groupe;
 
 import javax.servlet.ServletException;
@@ -30,9 +31,6 @@ public class NewBillet extends HttpServlet{
 
         HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
 
-        //System.out.println("CONTENU " + contenu);
-        //System.out.println("TITRE " + titre);
-
         Billet billet = new Billet();
 
         if(billet.getAuteur().equals("Personne")) {
@@ -52,11 +50,14 @@ public class NewBillet extends HttpServlet{
                 g.get(pseudo).getGestion().addbillet(b2,groupe);
             }
 
+            //menu billet
+            Billets billets = new Billets(g.get(pseudo).getGestion().getBillets(groupe));
+            request.setAttribute("billets",billets);
 
-
+            int indice = g.get(pseudo).getGestion().getBillets(groupe).size() - 1;
+            request.getServletContext().setAttribute("indice" ,indice);
 
             request.setAttribute("billet",billet);
-            System.out.println("titre : "+ billet.getTitre());
             request.getRequestDispatcher("billet.jsp").forward(request, response);
         }
 
