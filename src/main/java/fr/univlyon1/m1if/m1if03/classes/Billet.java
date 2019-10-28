@@ -53,4 +53,8 @@ public class Billet {
     public void setAuteur(String auteur) {
         this.auteur = auteur;
     }
+
+    public boolean equals (Billet b2){
+        return(this.getAuteur() ==b2.getAuteur() && this.getContenu()==b2.getContenu() && this.getTitre()==b2.getTitre());
+    }
 }
