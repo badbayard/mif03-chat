@@ -5,7 +5,7 @@
 
 <!doctype html>
 <html>
-<jsp:include page="WEB-INF/header.jsp" ></jsp:include>
+<jsp:include page="header.jsp" ></jsp:include>
 <body>
 <p>Ceci est un billet de ${billet.auteur}</p>
 <h1>${billet.titre}</h1>

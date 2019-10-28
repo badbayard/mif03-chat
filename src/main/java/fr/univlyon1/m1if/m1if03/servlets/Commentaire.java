@@ -41,10 +41,10 @@ public class Commentaire extends HttpServlet {
             billet.getCommentaires().add(new Message(pseudo , commentaire));
             request.setAttribute("billet", billet);
 
-            request.getRequestDispatcher("billet.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
         } else {
             request.setAttribute("billet", billet);
-            request.getRequestDispatcher("billet.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
         }
     }
 

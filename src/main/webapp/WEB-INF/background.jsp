@@ -4,7 +4,7 @@
 
 <!doctype html>
 <html>
-<jsp:include page="WEB-INF/header.jsp" ></jsp:include>
+<jsp:include page="header.jsp" ></jsp:include>
 <body>
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>

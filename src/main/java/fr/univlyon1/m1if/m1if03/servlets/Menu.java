@@ -37,6 +37,6 @@ public class Menu extends HttpServlet {
             request.setAttribute("billet", billet);
         }
 
-        request.getRequestDispatcher("billet.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
     }
 }

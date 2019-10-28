@@ -56,7 +56,7 @@ public class Init extends HttpServlet {
 
             if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
                 //pas de billets pour l'utilisateur
-                request.getRequestDispatcher("background.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/background.jsp").forward(request, response);
 
             } else {
                 //il existe un billet pour l'utilisateur on le récupere et on l'affiche (on recup le dernier billet par defaut)
@@ -69,7 +69,7 @@ public class Init extends HttpServlet {
                 request.setAttribute("billets",billets);
 
                 request.setAttribute("billet", billet);
-                request.getRequestDispatcher("billet.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
             }
 
 

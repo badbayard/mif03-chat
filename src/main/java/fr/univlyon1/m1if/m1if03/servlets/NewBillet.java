@@ -58,7 +58,7 @@ public class NewBillet extends HttpServlet{
             request.getServletContext().setAttribute("indice" ,indice);
 
             request.setAttribute("billet",billet);
-            request.getRequestDispatcher("billet.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
         }
 
     }
