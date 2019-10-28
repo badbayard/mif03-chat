@@ -44,8 +44,18 @@ public class Init extends HttpServlet {
             session.setAttribute("groupe",groupe); // <----- groupe
 
 
+
+            System.out.println("liste des groupes : ");
+            Groupe grp = new Groupe(groupe);
+            for(String k : g.keySet()) {
+                System.out.println(g.get(k).getNom());
+                if(g.get(k).getNom().equals(groupe)) {
+                    grp = g.get(k);
+                }
+            }
+
             if(g.get(pseudo) == null) {
-                g.put(pseudo , new Groupe(groupe));
+                g.put(pseudo , grp);
             }
             if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
                 //ajout du groupe
