@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-@WebServlet(name = "Menu", urlPatterns = "/Menu")
+@WebServlet(name = "Menu", urlPatterns = "/Menu.do")
 public class Menu extends HttpServlet {
 
     @Override
@@ -37,6 +37,6 @@ public class Menu extends HttpServlet {
             request.setAttribute("billet", billet);
         }
 
-        request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
     }
 }

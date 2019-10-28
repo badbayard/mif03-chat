@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-@WebServlet(name = "NewBillet", urlPatterns = "/NewBillet")
+@WebServlet(name = "NewBillet", urlPatterns = "/NewBillet.do")
 public class NewBillet extends HttpServlet{
 
     @Override
@@ -58,7 +58,7 @@ public class NewBillet extends HttpServlet{
             request.getServletContext().setAttribute("indice" ,indice);
 
             request.setAttribute("billet",billet);
-            request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
         }
 
     }

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import java.util.HashMap;
 
-@WebServlet(name = "Commentaire", urlPatterns = "/Commentaire")
+@WebServlet(name = "Commentaire", urlPatterns = "/Commentaire.do")
 public class Commentaire extends HttpServlet {
 
     @Override
@@ -41,10 +41,10 @@ public class Commentaire extends HttpServlet {
             billet.getCommentaires().add(new Message(pseudo , commentaire));
             request.setAttribute("billet", billet);
 
-            request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
         } else {
             request.setAttribute("billet", billet);
-            request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
         }
     }
 

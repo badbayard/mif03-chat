@@ -45,7 +45,7 @@ public class Init extends HttpServlet {
 
 
 
-            System.out.println("liste des groupes : ");
+            //System.out.println("liste des groupes : ");
             Groupe grp = new Groupe(groupe);
             for(String k : g.keySet()) {
                 System.out.println(g.get(k).getNom());
@@ -66,7 +66,7 @@ public class Init extends HttpServlet {
 
             if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
                 //pas de billets pour l'utilisateur
-                request.getRequestDispatcher("WEB-INF/background.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/background.jsp").forward(request, response);
 
             } else {
                 //il existe un billet pour l'utilisateur on le récupere et on l'affiche (on recup le dernier billet par defaut)
@@ -79,7 +79,7 @@ public class Init extends HttpServlet {
                 request.setAttribute("billets",billets);
 
                 request.setAttribute("billet", billet);
-                request.getRequestDispatcher("WEB-INF/billet.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
             }
 
 

@@ -11,7 +11,7 @@
 <h1>${billet.titre}</h1>
 <div class="contenu">${billet.contenu}</div>
 <hr>
-<form method="post" action="Commentaire">
+<form method="post" action="Commentaire.do">
     <p>
         Commentaire :
         <input type="text" name="commentaire">
@@ -25,7 +25,7 @@
 </c:forEach>
 
 
-<form method="post" action = "Menu" >
+<form method="post" action = "Menu.do" >
     <select id="idMenu" name="menu">
         <c:forEach items = "${billets.billets}" var = "b" >
             <option value="${billets.position(b)}">${b.titre}</option>
@@ -37,7 +37,7 @@
 <%out.println("<p>"+(String) session.getAttribute("groupe")+"</p>");%> <!-- juste pour le test -->
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
-<p><a href="Deco">Se déconnecter</a></p>
+<p><a href="Deco.do">Se déconnecter</a></p>
 
 </body>
 </html>
