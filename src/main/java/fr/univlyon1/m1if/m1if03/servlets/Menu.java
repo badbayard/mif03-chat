@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -17,6 +18,10 @@ public class Menu extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //http header
+        response.addDateHeader("Last-Modified" , (new Date().getTime()));
+
+
         String rep = request.getParameter("menu");
         int indice = Integer.parseInt(request.getParameter("menu"));
         request.getServletContext().setAttribute("indice" ,indice);

@@ -34,7 +34,6 @@
     <input type = "submit" value="Get"/>
 </form>
 
-<%out.println("<p>"+(String) session.getAttribute("groupe")+"</p>");%> <!-- juste pour le test -->
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
 <p><a href="Deco.do">Se déconnecter</a></p>

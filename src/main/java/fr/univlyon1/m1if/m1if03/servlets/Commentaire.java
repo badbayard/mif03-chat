@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.HashMap;
 
 @WebServlet(name = "Commentaire", urlPatterns = "/Commentaire.do")
@@ -18,6 +19,11 @@ public class Commentaire extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        //http header
+        response.addDateHeader("Last-Modified" , (new Date().getTime()));
+
+
 
         HttpSession session = request.getSession(true);
 
@@ -47,6 +53,8 @@ public class Commentaire extends HttpServlet {
             request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
         }
     }
+
+
 
 
 }

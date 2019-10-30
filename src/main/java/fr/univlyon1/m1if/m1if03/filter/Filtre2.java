@@ -46,7 +46,6 @@ public class Filtre2 extends HttpServlet implements Filter{
             return;
         }
 
-        System.out.println("ok");
         filterChain.doFilter(request,response);
 
 
