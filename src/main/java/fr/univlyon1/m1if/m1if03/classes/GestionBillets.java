@@ -32,4 +32,8 @@ public class GestionBillets {
         billets.get(groupe).add(newBillet);
     }
 
+    public int nbBillet (String groupe) {
+        return billets.get(groupe).size();
+    }
+
 }
