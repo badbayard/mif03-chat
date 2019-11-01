@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -21,6 +22,10 @@ public class NewBillet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        //http header
+        response.addDateHeader("Last-Modified" , (new Date().getTime()));
+
+
         HttpSession session = request.getSession(true);
         String contenu  = request.getParameter("contenu");
         String titre  = request.getParameter("titre");
@@ -28,7 +33,7 @@ public class NewBillet extends HttpServlet{
         String pseudo = (String)session.getAttribute("pseudo");
         String groupe = (String)session.getAttribute("groupe");
 
-
+        boolean empty = false;
         HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
 
         Billet billet = new Billet();
@@ -50,17 +55,32 @@ public class NewBillet extends HttpServlet{
                 g.get(pseudo).getGestion().addbillet(b2,groupe);
             }
 
-            //menu billet
-            Billets billets = new Billets(g.get(pseudo).getGestion().getBillets(groupe));
-            request.setAttribute("billets",billets);
+        } else {
+            //l'utilisateur a saisi un billet vide
+            if(g.get(pseudo).getGestion().nbBillet(groupe) == 0) {
+                //l'utilisateur n'a pas de billet -> redirection background
+                request.getRequestDispatcher("WEB-INF/jsp/background.jsp").forward(request, response);
+            } else  {
+                // billet vide et l'utilisateur avais deja des billets
+                empty = true ;
+            }
+        }
+        //menu billet
+        Billets billets = new Billets(g.get(pseudo).getGestion().getBillets(groupe));
+        request.setAttribute("billets",billets);
 
-            int indice = g.get(pseudo).getGestion().getBillets(groupe).size() - 1;
-            request.getServletContext().setAttribute("indice" ,indice);
-
-            request.setAttribute("billet",billet);
-            request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
+        int indice;
+        if(empty) {
+            indice = (int)request.getServletContext().getAttribute("indice");
+            billet = g.get(pseudo).getGestion().getBillet(groupe, indice);
+        } else {
+            indice = g.get(pseudo).getGestion().getBillets(groupe).size() - 1;
         }
 
+        request.getServletContext().setAttribute("indice" ,indice);
+
+        request.setAttribute("billet",billet);
+        request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
     }
 
 

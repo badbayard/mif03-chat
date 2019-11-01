@@ -1,4 +1,4 @@
-package fr.univlyon1.m1if.m1if03.servlets;
+package fr.univlyon1.m1if.m1if03.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -17,17 +17,26 @@ public class Filtre extends HttpServlet implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-
         HttpSession session = request.getSession(true);
-        String pseudo = (String)session.getAttribute("pseudo");
-        //System.out.println("pseudo : " + pseudo);
 
+        //bloc innutile la servlet Init n'est pas prise en compte dans le filtre
+        /*
+        String pseu = request.getParameter("pseudo");
+        if(pseu != null && !pseu.equals("")){
+            session.setAttribute(pseu,"pseudo");
+            System.out.println("affectation");
+        }
+        */
+
+
+        String pseudo = (String)session.getAttribute("pseudo");
         if(pseudo == null || pseudo.equals("")) {
+            //System.out.println("redirection");
             response.sendRedirect("index.html");
             return;
         }
 
-        System.out.println("je suis laaaaaaaaaaaaaaaaaaaaaaaaaa");
+
         filterChain.doFilter(request,response);
 
     }
