@@ -19,7 +19,6 @@
     <filter-class>fr.univlyon1.m1if.m1if03.filter.Filtre2</filter-class>
   </filter>
 
-
   <filter-mapping>
     <filter-name>Filtre</filter-name>
     <url-pattern>*.do</url-pattern>
@@ -29,5 +28,14 @@
     <filter-name>Filtre2</filter-name>
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Routeur</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+
+
+
+
 
 </web-app>

@@ -31,8 +31,7 @@ public class Init extends HttpServlet {
 
 
 
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //http header
         response.addDateHeader("Last-Modified" , (new Date().getTime()));
