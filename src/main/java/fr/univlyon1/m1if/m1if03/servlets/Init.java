@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 
-@WebServlet(name = "Init", urlPatterns = "/Init")
+@WebServlet(name = "Init", urlPatterns = "")
 public class Init extends HttpServlet {
 
     @Override
@@ -33,6 +33,7 @@ public class Init extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        System.out.println("je suis dans le post");
         //http header
         response.addDateHeader("Last-Modified" , (new Date().getTime()));
 
@@ -70,7 +71,8 @@ public class Init extends HttpServlet {
 
             if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
                 //pas de billets pour l'utilisateur
-                request.getRequestDispatcher("WEB-INF/jsp/background.jsp").forward(request, response);
+                //request.getRequestDispatcher("WEB-INF/jsp/background.jsp").forward(request, response);
+                response.setStatus(HttpServletResponse.SC_CREATED);
 
             } else {
                 //il existe un billet pour l'utilisateur on le récupere et on l'affiche (on recup le dernier billet par defaut)
@@ -83,21 +85,23 @@ public class Init extends HttpServlet {
                 request.setAttribute("billets",billets);
 
                 request.setAttribute("billet", billet);
-                request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
+                //request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
+                response.setStatus(HttpServletResponse.SC_CREATED);
+
             }
 
 
         } else {
-            response.sendRedirect("index.html");
+            //response.sendRedirect("index.html");
         }
+        System.out.println("status : " + response.getStatus());
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         long lastModifiedBrowser = request.getDateHeader("If-Modified-Since");
         long lastModifiedServer = getLastModified(request);
-
+        //System.out.println("je suis dans init" );
 
         if(lastModifiedBrowser != -1 && lastModifiedServer <= lastModifiedBrowser) {
             response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
