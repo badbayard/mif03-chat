@@ -92,16 +92,17 @@ public class Init extends HttpServlet {
 
 
         } else {
-            //response.sendRedirect("index.html");
+            response.sendRedirect("index.html");
         }
         System.out.println("status : " + response.getStatus());
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        System.out.println("doget init");
         long lastModifiedBrowser = request.getDateHeader("If-Modified-Since");
         long lastModifiedServer = getLastModified(request);
-        //System.out.println("je suis dans init" );
 
         if(lastModifiedBrowser != -1 && lastModifiedServer <= lastModifiedBrowser) {
             response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);

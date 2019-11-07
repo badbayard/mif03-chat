@@ -28,7 +28,7 @@ public class Filtre extends HttpServlet implements Filter {
         }
         */
 
-
+        System.out.println("filtre");
         String pseudo = (String)session.getAttribute("pseudo");
         if(pseudo == null || pseudo.equals("")) {
             //System.out.println("redirection");

@@ -9,7 +9,7 @@ public class Groupes {
         groupes = new ArrayList<>();
     }
 
-    public void addGroupes(Groupe g){
+    public void addGroupe(Groupe g){
         groupes.add(g);
     }
 

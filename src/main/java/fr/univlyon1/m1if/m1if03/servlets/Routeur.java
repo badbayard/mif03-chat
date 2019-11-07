@@ -24,15 +24,17 @@ public class Routeur extends HttpServlet {
 
         String url = request.getRequestURI();
         String [] params = url.split("/");
-        //String last = params[params.length - 1];
+        String last = "/";
+        if(params.length > 0) {
+            last = params[params.length - 1];
+        }
 
-        System.out.println("status : " + response.getStatus());
-
-        //System.out.println("method : " + request.getMethod() +" l'url :" +url );
         if (url.equals("/Init")) {
             request.getServletContext().getNamedDispatcher("Init").forward(request, response);
+        } else if (url.equals("/Groupes")) {
+            request.getServletContext().getNamedDispatcher("Groupes").forward(request, response);
         } else {
-            System.out.println("URL : " + url + " method : " +request.getMethod());
+            System.out.println("URL : " + url + " method : " +request.getMethod() + " status : " + response.getStatus());
         }
 
 

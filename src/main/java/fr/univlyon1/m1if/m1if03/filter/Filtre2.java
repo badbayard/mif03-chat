@@ -41,6 +41,7 @@ public class Filtre2 extends HttpServlet implements Filter{
         String groupe = (String)session.getAttribute("groupe");
         HashMap<String, Groupe> g = (HashMap<String, Groupe>) sc.getAttribute("g");
 
+        System.out.println("filtre2");
         if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
             response.sendRedirect("index.html");
             return;
