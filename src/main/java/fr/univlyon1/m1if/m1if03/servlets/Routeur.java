@@ -1,5 +1,4 @@
 package fr.univlyon1.m1if.m1if03.servlets;
-import javax.servlet.Filter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -34,11 +33,6 @@ public class Routeur extends HttpServlet {
 
 
 /*
-        RequestDispatcher dispatcher;
-        String path [] = request.getRequestURI().split("/");
-        if(path.length > 1) { // l'URL est complète
-            dispatcher = request.getServletContext().getNamedDispatcher(path[1]);
-            if(dispatcher != null) { // la servlet est référencée dans le contexte par son nom
                 if (url.equals("/Init")) {
                     request.getServletContext().getNamedDispatcher("Init").forward(request, response);
                 } else if (url.equals("/Groupes")) {
@@ -46,22 +40,6 @@ public class Routeur extends HttpServlet {
                 } else {
                     System.out.println("URL : " + url + " method : " + request.getMethod() + " status : " + response.getStatus());
                 }
-                dispatcher.forward(request, response);
-            } else { // renvoi de fichiers statiques
-                // cf. https://stackoverflow.com/questions/132052/servlet-for-serving-static-content
-                dispatcher = getServletContext().getNamedDispatcher("default");
-
-                HttpServletRequest wrapped = new HttpServletRequestWrapper(request) {
-                    public String getServletPath() { return ""; }
-                };
-
-                dispatcher.forward(wrapped, response);
-            }
-        } else { // Page d'accueil
-            dispatcher = request.getRequestDispatcher("/index.html");
-            dispatcher.forward(request, response);
-        }
-
  */
     dispatch(request,response);
     }
@@ -70,28 +48,7 @@ public class Routeur extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String url = request.getRequestURI();
-        String[] params = url.split("/");
-        //String last = params[params.length - 1];
-
-        if (request.getParameter("pseudo") != null && !request.getParameter("pseudo").equals("")) {
-
-
-            if (url.equals("/index.html")) {
-                request.getRequestDispatcher(url).forward(request, response);
-            }else if (url.equals("/Init")) {
-                request.getServletContext().getNamedDispatcher("Init").forward(request, response);
-            }
-            else {
-                System.out.println("status : " + response.getStatus());
-                System.out.println("URL : " + url + " method : " +request.getMethod());
-
-            }
-
-
-        }
-        //System.out.println("method : " + request.getMethod() + " last : " + last);
-
+        dispatch(request, response);
     }
 
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -118,7 +75,9 @@ public class Routeur extends HttpServlet {
                 dispatcher = getServletContext().getNamedDispatcher("default");
 
                 HttpServletRequest wrapped = new HttpServletRequestWrapper(request) {
-                    public String getServletPath() { return ""; }
+                    public String getServletPath() {
+                        return "";
+                    }
                 };
 
                 dispatcher.forward(wrapped, response);
@@ -130,3 +89,11 @@ public class Routeur extends HttpServlet {
     }
 
 }
+
+/**
+ *     <servlet-mapping>
+ *     <servlet-name>Routeur</servlet-name>
+ *     <jsp-file>/*</url-pattern>
+ *   </servlet-mapping>
+
+ */
