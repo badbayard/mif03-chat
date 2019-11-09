@@ -70,6 +70,16 @@
   </servlet-mapping>
 
 
+<servlet>
+  <servlet-name>ControllerGroupe</servlet-name>
+  <jsp-file>/groupes.jsp</jsp-file>
+</servlet>
+  <servlet-mapping>
+    <servlet-name>ControllerGroupe</servlet-name>
+    <url-pattern>/groupes.jsp</url-pattern>
+  </servlet-mapping>
+
+
 
 
 

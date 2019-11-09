@@ -23,6 +23,7 @@ public class ContentNegotiation implements Filter {
         if (view != null) {
             // TODO implémenter ici la négociation de contenus
 
+
             if(((HttpServletRequest) req).getHeader("Accept").startsWith("text/html")) {
                 // Cas des JSP (nommées dans le web.xml)
                 RequestDispatcher dispatcher = filterConfig.getServletContext().getNamedDispatcher(view + "-vue");

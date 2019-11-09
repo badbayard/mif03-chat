@@ -20,4 +20,25 @@ public class Groupes {
     public  ArrayList<Groupe> getGroupes (){
         return groupes;
     }
+
+    public boolean contains(String n) {
+        for(Groupe g : groupes) {
+            if (g.getNom().equals(n)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public int position (Groupe g) {
+        for (int i = 0 ; i < groupes.size() ; i++) {
+            Groupe g2 = groupes.get(i);
+            if(g.getNom() == g2.getNom()){
+                return i;
+            }
+        }
+        return -1;
+
+    }
 }

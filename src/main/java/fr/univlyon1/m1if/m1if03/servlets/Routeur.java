@@ -67,7 +67,7 @@ public class Routeur extends HttpServlet {
         String path [] = request.getRequestURI().split("/");
         // Les 2 premières parties sont serveur et chemin de l'application -> on s'intéresse à la suite
         if(path.length > 1) { // l'URL est complète
-            dispatcher = request.getServletContext().getNamedDispatcher(path[1]);
+            dispatcher = request.getServletContext().getNamedDispatcher(path[path.length - 1]);
             if(dispatcher != null) { // la servlet est référencée dans le contexte par son nom
                 dispatcher.forward(request, response);
             } else { // renvoi de fichiers statiques
@@ -91,9 +91,13 @@ public class Routeur extends HttpServlet {
 }
 
 /**
- *     <servlet-mapping>
- *     <servlet-name>Routeur</servlet-name>
- *     <jsp-file>/*</url-pattern>
+ *     <servlet>
+ *   <servlet-name>ControllerGroupe</servlet-name>
+ *   <jsp-file>/groupes.jsp</jsp-file>
+ * </servlet>
+ *   <servlet-mapping>
+ *     <servlet-name>ControllerGroupe</servlet-name>
+ *     <url-pattern>/groupes.jsp</url-pattern>
  *   </servlet-mapping>
 
  */

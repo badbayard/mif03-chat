@@ -1,16 +1,26 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: yann
-  Date: 08/11/2019
-  Time: 16:46
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<jsp:useBean id="groupes" scope="request" class="fr.univlyon1.m1if.m1if03.classes.Groupes"/>
+<!doctype html>
 <html>
-<head>
-    <title>Title</title>
-</head>
 <body>
+
+<form method="post" action="Users">
+    <p>
+        Entrez votre pseudo :
+        <input type="text" name="pseudo">
+    </p>
+
+    <select id="idMenu" name="menu">
+        <c:forEach items = "${groupes.groupes}" var = "b" >
+            <option value="${groupes.position(b)}">${ b.nom }</option>
+        </c:forEach>
+    </select>
+
+    <input type="submit" value="Connexion">
+</form>
+
+<p><a href="Deco.do">Se déconnecter</a></p>
 
 </body>
 </html>
