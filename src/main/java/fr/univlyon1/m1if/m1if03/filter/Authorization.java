@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @WebFilter("/Filtre2")
-public class Filtre2 extends HttpServlet implements Filter{
+public class Authorization extends HttpServlet implements Filter{
 
     private FilterConfig fg;
 
@@ -41,7 +41,7 @@ public class Filtre2 extends HttpServlet implements Filter{
         String groupe = (String)session.getAttribute("groupe");
         HashMap<String, Groupe> g = (HashMap<String, Groupe>) sc.getAttribute("g");
 
-        System.out.println("filtre2");
+        System.out.println("Authorization");
         if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
             response.sendRedirect("index.html");
             return;

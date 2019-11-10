@@ -36,7 +36,6 @@ public class Init extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("je suis dans le post");
         //http header
         response.addDateHeader("Last-Modified" , (new Date().getTime()));
 
@@ -111,13 +110,10 @@ public class Init extends HttpServlet {
         //request.getRequestDispatcher("WEB-INF/jsp/groupes.jsp").forward(request, response);
         //request.getServletContext().getNamedDispatcher("Groupes").forward(request, response);
         response.sendRedirect("Groupes");
-        System.out.println("status : " + response.getStatus());
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        System.out.println("doget init");
         long lastModifiedBrowser = request.getDateHeader("If-Modified-Since");
         long lastModifiedServer = getLastModified(request);
 

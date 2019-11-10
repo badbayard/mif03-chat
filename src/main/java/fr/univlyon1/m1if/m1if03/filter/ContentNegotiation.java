@@ -17,8 +17,8 @@ public class ContentNegotiation implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         chain.doFilter(req, resp);
-        //System.out.println("je passe dans le filtre");
         String view = (String) ((HttpServletRequest) req).getAttribute("view");
+        //System.out.println("view : " + view);
         // S'il y a un contenu à renvoyer
         if (view != null) {
             // TODO implémenter ici la négociation de contenus

@@ -40,8 +40,7 @@ public class ControllerGroupe extends HttpServlet {
             groupes.addGroupe(new Groupe(groupe));
         }
         request.setAttribute("groupes", groupes);
-        //response.sendRedirect("WEB-INF/jsp/groupes.jsp");
-        request.getRequestDispatcher("WEB-INF/jsp/groupes.jsp").forward(request, response);
+        request.setAttribute("view" , "groupes");
 
 
     }
@@ -62,7 +61,6 @@ public class ControllerGroupe extends HttpServlet {
             System.out.println(grp.getNom());
         }
 
-        System.out.println(request.getRequestURI());
         request.getRequestDispatcher("WEB-INF/jsp/groupes.jsp").forward(request, response);
     }
 }

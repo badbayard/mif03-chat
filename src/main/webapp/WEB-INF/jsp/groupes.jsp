@@ -11,7 +11,7 @@
         <input type="text" name="pseudo">
     </p>
 
-    <select id="idMenu" name="menu">
+    <select id="idMenuGroupe" name="menuGroupe">
         <c:forEach items = "${groupes.groupes}" var = "b" >
             <option value="${groupes.position(b)}">${ b.nom }</option>
         </c:forEach>

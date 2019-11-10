@@ -36,18 +36,15 @@
 
   <filter>
     <filter-name>Filtre</filter-name>
-    <filter-class>fr.univlyon1.m1if.m1if03.filter.Filtre</filter-class>
+    <filter-class>fr.univlyon1.m1if.m1if03.filter.Authentication</filter-class>
   </filter>
 
   <filter>
     <filter-name>Filtre2</filter-name>
-    <filter-class>fr.univlyon1.m1if.m1if03.filter.Filtre2</filter-class>
+    <filter-class>fr.univlyon1.m1if.m1if03.filter.Authorization</filter-class>
   </filter>
 
-  <filter>
-    <filter-name>ContentNegotiation</filter-name>
-    <filter-class>fr.univlyon1.m1if.m1if03.filter.ContentNegotiation</filter-class>
-  </filter>
+
 
   <filter-mapping>
     <filter-name>Filtre</filter-name>
@@ -70,20 +67,119 @@
   </servlet-mapping>
 
 
-<servlet>
-  <servlet-name>ControllerGroupe</servlet-name>
-  <jsp-file>/groupes.jsp</jsp-file>
-</servlet>
+
+    <servlet>
+      <servlet-name>billet-vue</servlet-name>
+      <jsp-file>/WEB-INF/jsp/billet.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>billet-vue</servlet-name>
+      <url-pattern>/billet.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet>
+      <servlet-name>groupes-vue</servlet-name>
+      <jsp-file>/WEB-INF/jsp/groupes.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>groupes-vue</servlet-name>
+      <url-pattern>/groupes.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet>
+      <servlet-name>header-vue</servlet-name>
+      <jsp-file>/WEB-INF/jsp/header.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>header-vue</servlet-name>
+      <url-pattern>/header.jsp</url-pattern>
+    </servlet-mapping>
+
+  <servlet>
+    <servlet-name>background-vue</servlet-name>
+    <jsp-file>/WEB-INF/jsp/background.jsp</jsp-file>
+  </servlet>
   <servlet-mapping>
-    <servlet-name>ControllerGroupe</servlet-name>
-    <url-pattern>/groupes.jsp</url-pattern>
+    <servlet-name>background-vue</servlet-name>
+    <url-pattern>/background.jsp</url-pattern>
   </servlet-mapping>
 
 
 
+    <servlet>
+      <servlet-name>menu-vue</servlet-name>
+      <jsp-file>/WEB-INF/jsp/menu.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>menu-vue</servlet-name>
+      <url-pattern>/menu.jsp</url-pattern>
+    </servlet-mapping>
+    <servlet>
+      <servlet-name>saisie-vue</servlet-name>
+      <jsp-file>/WEB-INF/jsp/saisie.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>saisie-vue</servlet-name>
+      <url-pattern>/saisie.jsp</url-pattern>
+    </servlet-mapping>
+    <!--
+     Définition des filtres :
+         - l'ordre d'application des filtres est celui de leur définition dans le fichier web.xml.
+         - Le filtre d'authenfification a un paramètre whitelist qui laisse passer les couples méthode / URL dedans.
+         - Le filtre de négociation de contenus doit être le dernier de la chaîne pour pouvoir écrire dans la réponse.
+    -->
+    <!--filter>
+      <filter-name>CorsFilter</filter-name>
+      <filter-class>org.apache.catalina.filter.CorsFilter</filter-class>
+      <init-param>
+        <param-name>cors.allowed.origins</param-name>
+        <param-value>http://editor.swagger.io</param-value>
+      </init-param>
+      <init-param>
+        <param-name>cors.allowed.methods</param-name>
+        <param-value>GET,POST,PUT,DELETE</param-value>
+      </init-param>
+      <init-param>
+        <param-name>cors.support.credentials</param-name>
+        <param-value>true</param-value>
+      </init-param>
+    </filter>
+    <filter-mapping>
+      <filter-name>CorsFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping!-->
+    <filter>
+      <filter-name>Authentication</filter-name>
+      <filter-class>fr.univlyon1.m1if.m1if03.filter.Authentication</filter-class>
+      <init-param>
+        <param-name>whitelist</param-name>
+        <param-value>
+          GET:/,GET:/index.html,GET:/css/copains.css,GET:/groupes,POST:/users/login,POST:/users/login
+        </param-value>
+      </init-param>
+    </filter>
+    <filter-mapping>
+      <filter-name>Authentication</filter-name>
+      <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    <filter>
+      <filter-name>Authorization</filter-name>
+      <filter-class>fr.univlyon1.m1if.m1if03.filter.Authorization</filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>Authorization</filter-name>
+      <url-pattern>/billets</url-pattern>
+      <url-pattern>/billets/*</url-pattern>
+    </filter-mapping>
+    <filter>
+      <filter-name>ContentNegotiation</filter-name>
+      <filter-class>
+        fr.univlyon1.m1if.m1if03.filter.ContentNegotiation
+      </filter-class>
+    </filter>
+    <filter-mapping>
+      <filter-name>ContentNegotiation</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
 
+  </web-app>
 
-
-
-</web-app>

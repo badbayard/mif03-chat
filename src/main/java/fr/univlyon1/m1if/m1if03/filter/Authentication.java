@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter("/Filtre")
-public class Filtre extends HttpServlet implements Filter {
+public class Authentication extends HttpServlet implements Filter {
 
 
     @Override
@@ -28,7 +28,7 @@ public class Filtre extends HttpServlet implements Filter {
         }
         */
 
-        System.out.println("filtre");
+        System.out.println("Authentification");
         String pseudo = (String)session.getAttribute("pseudo");
         if(pseudo == null || pseudo.equals("")) {
             //System.out.println("redirection");
