@@ -63,22 +63,33 @@ public class Routeur extends HttpServlet {
     private void dispatch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher;
 
-
+/*
         if(getServletContext().getAttribute("pseudo") != null || !getServletContext().getAttribute("pseudo").equals("")) {
             String url = request.getRequestURI() + "?pseudo=" + getServletContext().getAttribute("pseudo");
             System.out.println(url);
 
         }
-
+*/
         // On décompose l'URL
         String path [] = request.getRequestURI().split("/");
         // Les 2 premières parties sont serveur et chemin de l'application -> on s'intéresse à la suite
 
+
+
+
         if(path.length > 1) { // l'URL est complète
-            dispatcher = request.getServletContext().getNamedDispatcher(path[path.length - 1]);
-            System.out.println(dispatcher);
+            dispatcher = request.getServletContext().getNamedDispatcher(path[1]);
+            if(path.length == 4 ) {
+                // url de la forme localhost:8080/Groupes/titi/nomgrp
+                for (String s : path) {
+                    System.out.println(s);
+                }
+                request.setAttribute("pseudo" ,path[2]);
+                request.setAttribute("groupe" ,path[3]);
+                dispatcher = getServletContext().getNamedDispatcher("Users");
+            }
             if(dispatcher != null) { // la servlet est référencée dans le contexte par son nom
-                dispatcher.forward(request, response);
+                dispatcher.include(request, response);
             } else { // renvoi de fichiers statiques
                 // cf. https://stackoverflow.com/questions/132052/servlet-for-serving-static-content
                 dispatcher = getServletContext().getNamedDispatcher("default");

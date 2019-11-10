@@ -41,4 +41,14 @@ public class Groupes {
         return -1;
 
     }
+
+
+    public Groupe find (String name) {
+        for (Groupe g : groupes) {
+            if(g.getNom() == name) {
+                return g;
+            }
+        }
+        return new Groupe();
+    }
 }
