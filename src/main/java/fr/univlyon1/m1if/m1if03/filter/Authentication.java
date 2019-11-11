@@ -1,11 +1,11 @@
 package fr.univlyon1.m1if.m1if03.filter;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebFilter("/Filtre")
@@ -36,6 +36,14 @@ public class Authentication extends HttpServlet implements Filter {
             return;
         }*/
 
+
+        String token = request.getParameter("token");
+        if(token != null) {
+            System.out.println("token dans auth = " + token);
+            DecodedJWT jwt = JWT.decode(token);
+            String contentType = jwt.getContentType();
+            System.out.println("token_after = " + contentType);
+        }
 
         filterChain.doFilter(request,response);
 
