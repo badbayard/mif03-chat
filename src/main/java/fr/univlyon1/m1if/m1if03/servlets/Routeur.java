@@ -78,21 +78,38 @@ public class Routeur extends HttpServlet {
 
 
         if(path.length > 1) { // l'URL est complète
+
+
             dispatcher = request.getServletContext().getNamedDispatcher(path[1]);
             if(path.length == 4 ) {
                 // url de la forme localhost:8080/Groupes/titi/nomgrp
-                for (String s : path) {
-                    System.out.println(s);
-                }
                 request.setAttribute("pseudo" ,path[2]);
                 request.setAttribute("groupe" ,path[3]);
                 dispatcher = getServletContext().getNamedDispatcher("Users");
+
+            } else if (path.length == 5 ) {
+                request.setAttribute("pseudo" ,path[2]);
+                request.setAttribute("groupe" ,path[3]);
+                if(path[path.length - 1].equals("saisie.html")) {
+                    //http://localhost:8080/Users/titi/gr/saisie.html
+                    dispatcher = request.getRequestDispatcher("/saisie.html");
+                    dispatcher.forward(request, response);
+
+                } else {
+                    //http://localhost:8080/Users/titi/gr/NewBillet.do
+                    dispatcher = getServletContext().getNamedDispatcher(path[path.length - 1]);
+                }
             }
+
             if(dispatcher != null) { // la servlet est référencée dans le contexte par son nom
                 dispatcher.include(request, response);
             } else { // renvoi de fichiers statiques
                 // cf. https://stackoverflow.com/questions/132052/servlet-for-serving-static-content
                 dispatcher = getServletContext().getNamedDispatcher("default");
+
+
+
+
                 //System.out.println(dispatcher);
                 HttpServletRequest wrapped = new HttpServletRequestWrapper(request) {
                     public String getServletPath() {

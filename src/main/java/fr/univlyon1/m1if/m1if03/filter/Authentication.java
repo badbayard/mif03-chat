@@ -17,7 +17,7 @@ public class Authentication extends HttpServlet implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession(true);
+        //HttpSession session = request.getSession(true);
 
         //bloc innutile la servlet Init n'est pas prise en compte dans le filtre
         /*
@@ -28,13 +28,13 @@ public class Authentication extends HttpServlet implements Filter {
         }
         */
 
-        System.out.println("Authentification");
-        String pseudo = (String)session.getAttribute("pseudo");
+
+        /*String pseudo = (String)session.getAttribute("pseudo");
         if(pseudo == null || pseudo.equals("")) {
             //System.out.println("redirection");
             response.sendRedirect("index.html");
             return;
-        }
+        }*/
 
 
         filterChain.doFilter(request,response);

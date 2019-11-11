@@ -41,11 +41,11 @@ public class Authorization extends HttpServlet implements Filter{
         String groupe = (String)session.getAttribute("groupe");
         HashMap<String, Groupe> g = (HashMap<String, Groupe>) sc.getAttribute("g");
 
-        System.out.println("Authorization");
-        if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
+
+        /*if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
             response.sendRedirect("index.html");
             return;
-        }
+        }*/
 
         filterChain.doFilter(request,response);
 

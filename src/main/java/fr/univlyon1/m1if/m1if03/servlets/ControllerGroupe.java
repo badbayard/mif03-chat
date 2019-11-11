@@ -11,9 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
-import java.util.HashMap;
+
 
 @WebServlet(name = "Groupes", urlPatterns = "/Groupes")
 public class ControllerGroupe extends HttpServlet {
@@ -29,12 +29,12 @@ public class ControllerGroupe extends HttpServlet {
 
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
+        //HttpSession session = request.getSession(true);
 
         Groupes groupes = (Groupes)request.getServletContext().getAttribute("groupes");
 
         String groupe = request.getParameter("groupe");
-        session.setAttribute("groupe",groupe);
+        //session.setAttribute("groupe",groupe);
 
         if(!groupes.contains(groupe)) {
             groupes.addGroupe(new Groupe(groupe));

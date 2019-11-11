@@ -25,12 +25,15 @@ public class ContentNegotiation implements Filter {
         // S'il y a un contenu à renvoyer
         if (view != null) {
             // TODO implémenter ici la négociation de contenus
+            /*
             resp.setContentType("application/json");
             PrintWriter writer = resp.getWriter();
             //JsonObject model = Json.createObjectBuilder();
             //writer.println(model);
             writer.flush();
             writer.close();
+            */
+
 
             if(((HttpServletRequest) req).getHeader("Accept").startsWith("text/html")) {
                 // Cas des JSP (nommées dans le web.xml)
