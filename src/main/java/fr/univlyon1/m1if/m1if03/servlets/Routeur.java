@@ -99,6 +99,25 @@ public class Routeur extends HttpServlet {
                     //http://localhost:8080/Users/titi/gr/NewBillet.do
                     dispatcher = getServletContext().getNamedDispatcher(path[path.length - 1]);
                 }
+            }else if (path.length == 6 ) {
+                //http://localhost:8080/Users/titi/gr/Billets/1
+                request.setAttribute("pseudo" ,path[2]);
+                request.setAttribute("groupe" ,path[3]);
+
+                if(path[4].equals("billets") || path[4].equals("Billets")) {
+                    request.setAttribute("index" , path[5]);
+                    dispatcher = getServletContext().getNamedDispatcher("Menu");
+                }
+            }
+            else if (path.length == 7) {
+                //http://localhost:8080/Users/titi/gr/Billets/1/Commentaire
+                request.setAttribute("pseudo" ,path[2]);
+                request.setAttribute("groupe" ,path[3]);
+                request.setAttribute("index" , path[5]);
+
+                if(path[4].equals("billets") || path[4].equals("Billets")) {
+                    dispatcher = getServletContext().getNamedDispatcher(path[path.length - 1]);
+                }
             }
 
             if(dispatcher != null) { // la servlet est référencée dans le contexte par son nom
