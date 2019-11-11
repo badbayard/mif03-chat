@@ -1,6 +1,8 @@
 package fr.univlyon1.m1if.m1if03.filter;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import javax.servlet.*;
@@ -43,6 +45,8 @@ public class Authentication extends HttpServlet implements Filter {
             DecodedJWT jwt = JWT.decode(token);
             String contentType = jwt.getContentType();
             System.out.println("token_after = " + contentType);
+            Algorithm algorithm = Algorithm.HMAC256("secret");
+            JWTVerifier verifier = JWT.require(algorithm).build();
         }
 
         filterChain.doFilter(request,response);
