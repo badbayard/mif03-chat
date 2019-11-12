@@ -46,4 +46,6 @@ BEAUCOUP de fonctionnalitées sont encore totalement buggées (notamment les com
 Nous avons fais au mieux et ce TP sera surement poursuivi d'ici le TP5. 
 (to be continued ...)
 
-
+#### VM
+- http://192.168.75.33:8080/v1/
+- http://192.168.75.33:8080/v2/
