@@ -69,5 +69,9 @@ public class Groupe {
         this.gestion = gestion;
     }
 
+    public String toString(){
+        return ("participant = "+ participants + "nom = " + nom);
+    }
+
 
 }

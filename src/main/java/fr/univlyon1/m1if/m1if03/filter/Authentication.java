@@ -1,15 +1,17 @@
 package fr.univlyon1.m1if.m1if03.filter;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebFilter("/Filtre")
-public class Filtre extends HttpServlet implements Filter {
+public class Authentication extends HttpServlet implements Filter {
 
 
     @Override
@@ -17,7 +19,7 @@ public class Filtre extends HttpServlet implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession(true);
+        //HttpSession session = request.getSession(true);
 
         //bloc innutile la servlet Init n'est pas prise en compte dans le filtre
         /*
@@ -29,13 +31,25 @@ public class Filtre extends HttpServlet implements Filter {
         */
 
 
-        String pseudo = (String)session.getAttribute("pseudo");
+        /*String pseudo = (String)session.getAttribute("pseudo");
         if(pseudo == null || pseudo.equals("")) {
             //System.out.println("redirection");
             response.sendRedirect("index.html");
             return;
-        }
+        }*/
 
+
+        //String token = request.getParameter("token");
+        String token = (String)request.getAttribute("token");
+        System.out.println("token dans auth = " + token);
+        if(token != null) {
+            System.out.println("token dans auth = " + token);
+            DecodedJWT jwt = JWT.decode(token);
+            String contentType = jwt.getContentType();
+            System.out.println("token_after = " + contentType);
+            Algorithm algorithm = Algorithm.HMAC256("secret");
+            JWTVerifier verifier = JWT.require(algorithm).build();
+        }
 
         filterChain.doFilter(request,response);
 

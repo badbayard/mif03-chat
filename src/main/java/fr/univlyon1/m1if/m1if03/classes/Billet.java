@@ -57,4 +57,8 @@ public class Billet {
     public boolean equals (Billet b2){
         return(this.getAuteur() ==b2.getAuteur() && this.getContenu()==b2.getContenu() && this.getTitre()==b2.getTitre());
     }
+
+    public String toString(){
+        return ("titre = "+titre+"contenu = " + contenu+"auteur = " + auteur+ "commentaire = " + commentaires);
+    }
 }

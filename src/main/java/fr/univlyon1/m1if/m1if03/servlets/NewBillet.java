@@ -16,22 +16,30 @@ import java.util.Date;
 import java.util.HashMap;
 
 
-@WebServlet(name = "NewBillet", urlPatterns = "/NewBillet.do")
+@WebServlet(name = "NewBillet", urlPatterns = "/NewBillet")
 public class NewBillet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+
+
+        System.out.println("pseudo : " + request.getAttribute("pseudo"));
+        System.out.println("pseudo : " + request.getAttribute("groupe"));
+
+
+
+
         //http header
         response.addDateHeader("Last-Modified" , (new Date().getTime()));
 
 
-        HttpSession session = request.getSession(true);
+        //HttpSession session = request.getSession(true);
         String contenu  = request.getParameter("contenu");
         String titre  = request.getParameter("titre");
 
-        String pseudo = (String)session.getAttribute("pseudo");
-        String groupe = (String)session.getAttribute("groupe");
+        String pseudo = (String)request.getAttribute("pseudo");
+        String groupe = (String)request.getAttribute("groupe");
 
         boolean empty = false;
         HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
@@ -39,7 +47,7 @@ public class NewBillet extends HttpServlet{
         Billet billet = new Billet();
 
         if(billet.getAuteur().equals("Personne")) {
-            billet.setAuteur((String) session.getAttribute("pseudo"));
+            billet.setAuteur(pseudo);
         }
         if (titre != null && !titre.equals("") || contenu != null && !contenu.equals("")) {
             if(billet.getTitre().equals("Rien")) {
@@ -59,7 +67,12 @@ public class NewBillet extends HttpServlet{
             //l'utilisateur a saisi un billet vide
             if(g.get(pseudo).getGestion().nbBillet(groupe) == 0) {
                 //l'utilisateur n'a pas de billet -> redirection background
-                request.getRequestDispatcher("WEB-INF/jsp/background.jsp").forward(request, response);
+
+
+                //TODO
+                //request.getRequestDispatcher("WEB-INF/jsp/background.jsp").forward(request, response);
+                request.setAttribute("view" , "background");
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             } else  {
                 // billet vide et l'utilisateur avais deja des billets
                 empty = true ;
@@ -80,7 +93,10 @@ public class NewBillet extends HttpServlet{
         request.getServletContext().setAttribute("indice" ,indice);
 
         request.setAttribute("billet",billet);
-        request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
+
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        request.setAttribute("view" , "billet");
+
     }
 
 

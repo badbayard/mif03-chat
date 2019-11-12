@@ -8,7 +8,7 @@
 <body>
 
 <p><a href="saisie.html">Saisir un nouveau billet</a></p>
-<p><a href="Deco.do">Se déconnecter</a></p>
+<p><a href="Deco">Se déconnecter</a></p>
 
 </body>
 </html>

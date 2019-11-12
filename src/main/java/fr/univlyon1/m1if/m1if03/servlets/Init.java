@@ -5,6 +5,7 @@ package fr.univlyon1.m1if.m1if03.servlets;
 import fr.univlyon1.m1if.m1if03.classes.Billet;
 import fr.univlyon1.m1if.m1if03.classes.Billets;
 import fr.univlyon1.m1if.m1if03.classes.Groupe;
+import fr.univlyon1.m1if.m1if03.classes.Users;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -19,20 +20,21 @@ import java.util.Date;
 import java.util.HashMap;
 
 
-@WebServlet(name = "Init", urlPatterns = "/Init")
+@WebServlet(name = "Init", urlPatterns = "")
 public class Init extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         ServletContext sc = config.getServletContext();
         HashMap<String, Groupe> g = new HashMap<>();
+        Users u = new Users();
+        sc.setAttribute("users", u);
         sc.setAttribute("g",g);
     }
 
 
 
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         //http header
         response.addDateHeader("Last-Modified" , (new Date().getTime()));
@@ -71,7 +73,8 @@ public class Init extends HttpServlet {
 
             if (g.get(pseudo).getGestion().getBillets(groupe).isEmpty()) {
                 //pas de billets pour l'utilisateur
-                request.getRequestDispatcher("WEB-INF/jsp/background.jsp").forward(request, response);
+                //request.getRequestDispatcher("WEB-INF/jsp/background.jsp").forward(request, response);
+                response.setStatus(HttpServletResponse.SC_CREATED);
 
             } else {
                 //il existe un billet pour l'utilisateur on le récupere et on l'affiche (on recup le dernier billet par defaut)
@@ -84,7 +87,10 @@ public class Init extends HttpServlet {
                 request.setAttribute("billets",billets);
 
                 request.setAttribute("billet", billet);
-                request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
+                //request.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(request, response);
+
+                response.setStatus(HttpServletResponse.SC_CREATED);
+
             }
 
 
@@ -92,13 +98,24 @@ public class Init extends HttpServlet {
             response.sendRedirect("index.html");
         }
 
+
+        Users users = (Users) request.getServletContext().getAttribute("users");
+        if(users.containUser(pseudo)) {
+            users.addUser(pseudo);
+        }
+
+
+        request.setAttribute("users", users);
+        request.setAttribute("groupes.jsp", "users");
+        //request.getRequestDispatcher("WEB-INF/jsp/groupes.jsp").forward(request, response);
+        //request.getServletContext().getNamedDispatcher("Groupes").forward(request, response);
+        response.sendRedirect("Groupes");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         long lastModifiedBrowser = request.getDateHeader("If-Modified-Since");
         long lastModifiedServer = getLastModified(request);
-
 
         if(lastModifiedBrowser != -1 && lastModifiedServer <= lastModifiedBrowser) {
             response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
