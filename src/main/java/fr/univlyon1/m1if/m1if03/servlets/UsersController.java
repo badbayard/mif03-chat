@@ -43,6 +43,7 @@ public class UsersController extends HttpServlet {
         //HttpSession session = request.getSession(true);
         Users users = (Users)request.getServletContext().getAttribute("users");
         Groupes grp = (Groupes)request.getServletContext().getAttribute("groupes");
+        HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
 
         String pseudo = request.getParameter("pseudo");
         int index  = Integer.parseInt(request.getParameter("menuGroupe"));
@@ -55,10 +56,21 @@ public class UsersController extends HttpServlet {
 
 
 
+        Groupe gr = grp.getGroupes(index);
+        request.setAttribute("groupe" ,gr);
+        request.setAttribute("pseudo" ,pseudo);
+
+        request.setAttribute("index" , index);
+        request.setAttribute("pseudo" , pseudo);
+        request.setAttribute("users", users);
+
+
+
         try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             String token = JWT.create()
-                .withClaim(pseudo, index)
+                .withClaim("index", index)
+                .withClaim("groupe", gr.getNom())
                 .withIssuer(pseudo)
                 .sign(algorithm);
             request.setAttribute("token", token);
@@ -67,20 +79,21 @@ public class UsersController extends HttpServlet {
 
         }
 
-
+        //verification
         String token =  (String)request.getAttribute("token");
         try {
-            System.out.println("token verif : " + token);
             Algorithm algorithm = Algorithm.HMAC256("secret");
             JWTVerifier verifier = JWT.require(algorithm)
-                .withClaim(pseudo, index)
+                .withClaim("index", index)
+                .withClaim("groupe", gr.getNom())
                 .withIssuer(pseudo)
                 .build();
             DecodedJWT jwt = verifier.verify(token);
-            System.out.println("Payload : " + jwt.getPayload() + " content type : " + jwt.getContentType());
+
         } catch (JWTVerificationException exception){
             //Invalid signature/claims
         }
+
 
 
         /*
@@ -104,21 +117,6 @@ public class UsersController extends HttpServlet {
         }
         */
 
-
-
-
-
-
-        Groupe gr = grp.getGroupes(index);
-        request.setAttribute("groupe" ,gr);
-        request.setAttribute("pseudo" ,pseudo);
-
-        request.setAttribute("index" , index);
-        request.setAttribute("pseudo" , pseudo);
-        request.setAttribute("users", users);
-
-
-        HashMap<String, Groupe> g =(HashMap<String, Groupe>) request.getServletContext().getAttribute("g");
 
 
 

@@ -1,4 +1,8 @@
 package fr.univlyon1.m1if.m1if03.servlets;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -9,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @WebServlet(name = "Routeur", urlPatterns = "/*")
@@ -81,6 +87,29 @@ public class Routeur extends HttpServlet {
 
 
             dispatcher = request.getServletContext().getNamedDispatcher(path[1]);
+            if(path.length == 3) {
+                //http://localhost:8080/Groupes/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0b3RvIiwiaW5kZXgiOjAsImdyb3VwZSI6ImdyIn0.NP2BhSCV3FDaoRD0Rj69dz8pdYJTM0n-z-W-gItSfNY/
+
+                Pattern pattern = Pattern.compile("(.*)\\.(.*)");
+                Matcher matcher = pattern.matcher(path[path.length - 1]);
+                if(matcher.matches()) {
+                    String token = path[path.length - 1];
+                    try {
+                        DecodedJWT jwt = JWT.decode(token);
+                        request.setAttribute("pseudo" , jwt.getIssuer());
+                        request.setAttribute("groupe" , jwt.getClaim("groupe").asString());
+                        request.setAttribute("index" , jwt.getClaim("index").asString());
+                        request.setAttribute("token", token);
+
+                        dispatcher = getServletContext().getNamedDispatcher("Users");
+
+                    } catch (JWTDecodeException exception){
+                        //Invalid token
+                    }
+                }
+
+            }
+
             if(path.length == 4 ) {
                 // url de la forme localhost:8080/Groupes/titi/nomgrp
                 request.setAttribute("pseudo" ,path[2]);
