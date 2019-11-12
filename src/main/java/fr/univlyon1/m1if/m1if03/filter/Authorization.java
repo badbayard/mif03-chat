@@ -37,15 +37,15 @@ public class Authorization extends HttpServlet implements Filter{
         ServletContext sc = fg.getServletContext();
 
         HttpSession session = request.getSession(true);
-        String pseudo = (String)session.getAttribute("pseudo");
-        String groupe = (String)session.getAttribute("groupe");
+        String groupe = (String)request.getAttribute("groupe");
+        String pseudo = (String)request.getAttribute("pseudo");
         HashMap<String, Groupe> g = (HashMap<String, Groupe>) sc.getAttribute("g");
 
 
-        /*if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
+        if(g.get(pseudo).getGestion().getBillets(groupe) == null) {
             response.sendRedirect("index.html");
             return;
-        }*/
+        }
 
         filterChain.doFilter(request,response);
 

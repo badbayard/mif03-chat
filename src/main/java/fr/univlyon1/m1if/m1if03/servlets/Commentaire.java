@@ -73,6 +73,10 @@ public class Commentaire extends HttpServlet {
         System.out.println("dans le DOGET") ;
         System.out.println("groupe : " +(String)req.getAttribute("groupe") + "pseudo : " +(String)req.getAttribute("pseudo")) ;
 
+        String groupe = (String)req.getAttribute("groupe");
+        String pseudo = (String)req.getAttribute("pseudo");
+        HashMap<String, Groupe> g =(HashMap<String, Groupe>) req.getServletContext().getAttribute("g");
+
 
         Cookie [] cookies = req.getCookies();
         if(cookies != null) {
@@ -87,6 +91,12 @@ public class Commentaire extends HttpServlet {
                 }
             }
         }
+
+        //menu billet
+        Billets billets = new Billets(g.get(pseudo).getGestion().getBillets(groupe));
+        req.setAttribute("billets",billets);
+
+
         //req.getRequestDispatcher("WEB-INF/jsp/billet.jsp").forward(req, resp);
         req.setAttribute("view" , "billet");
 

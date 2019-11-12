@@ -5,8 +5,10 @@ package fr.univlyon1.m1if.m1if03.servlets;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.JWTVerifier;
 import fr.univlyon1.m1if.m1if03.classes.Groupe;
 import fr.univlyon1.m1if.m1if03.classes.Groupes;
 import fr.univlyon1.m1if.m1if03.classes.User;
@@ -19,10 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Cookie;
 import java.io.IOException;
-import java.security.Signature;
-import java.security.interfaces.RSAPublicKey;
 import java.util.HashMap;
 
 @WebServlet(name = "Users", urlPatterns = "/Users")
@@ -54,20 +53,44 @@ public class UsersController extends HttpServlet {
             users.addUser(pseudo);
         }
 
-        Algorithm algorithm = Algorithm.HMAC256("secret");
-        String token = JWT.create()
-                .withClaim(pseudo,index)
+
+
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("secret");
+            String token = JWT.create()
+                .withClaim(pseudo, index)
                 .withIssuer(pseudo)
                 .sign(algorithm);
-        request.setAttribute("token",token);
+            request.setAttribute("token", token);
+            System.out.println("token creation : " + token);
+        } catch (JWTVerificationException exception) {
+
+        }
+
+
+        String token =  (String)request.getAttribute("token");
+        try {
+            System.out.println("token verif : " + token);
+            Algorithm algorithm = Algorithm.HMAC256("secret");
+            JWTVerifier verifier = JWT.require(algorithm)
+                .withClaim(pseudo, index)
+                .withIssuer(pseudo)
+                .build();
+            DecodedJWT jwt = verifier.verify(token);
+            System.out.println("Payload : " + jwt.getPayload() + " content type : " + jwt.getContentType());
+        } catch (JWTVerificationException exception){
+            //Invalid signature/claims
+        }
+
+
         /*
         //parser et decode
         DecodedJWT jwt = JWT.decode(token);
         String contentType = jwt.getContentType();
         System.out.println("token_after = "+contentType);
         Cookie cookie = new Cookie("token_name","token_value");
-        //cookie = token;
-        */
+        cookie = token;
+
         /*
         RSAPublicKey publicKey = //Get the key instance
                 RSAPrivateKey privateKey = //Get the key instance
@@ -80,6 +103,10 @@ public class UsersController extends HttpServlet {
             //Invalid Signing configuration / Couldn't convert Claims.
         }
         */
+
+
+
+
 
 
         Groupe gr = grp.getGroupes(index);

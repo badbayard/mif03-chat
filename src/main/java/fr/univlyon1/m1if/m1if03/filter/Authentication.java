@@ -39,7 +39,9 @@ public class Authentication extends HttpServlet implements Filter {
         }*/
 
 
-        String token = request.getParameter("token");
+        //String token = request.getParameter("token");
+        String token = (String)request.getAttribute("token");
+        System.out.println("token dans auth = " + token);
         if(token != null) {
             System.out.println("token dans auth = " + token);
             DecodedJWT jwt = JWT.decode(token);
