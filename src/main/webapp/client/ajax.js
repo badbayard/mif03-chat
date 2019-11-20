@@ -10,8 +10,9 @@ function refresh() {
 var login;
 var billets;
 
+/*
 $(document).ready(function () {
     $("#").click(function () {
 
     })
-})
+}) */
