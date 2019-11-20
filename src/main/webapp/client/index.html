@@ -23,8 +23,18 @@
 
     </script>
 
+
+    <!-- test mustache -->
+    <script id ="template">
+
+    </script>
+
+    <div id="mu">
+
+    </div>
+
 </head>
-<body>
+<body onload="f()">
 <h1>Mes Copains (en AJAX) !</h1>
 <div id="errMsg"></div>
 <aside>
@@ -34,7 +44,7 @@
         <li><a href='#groupes'>Groupes</a></li>
         <li><a href='#groupe'>Groupe</a></li>
         <li><a href='#billet'>Billet</a></li>
-        <li><a href='#users'>Utilisateurs</a></li>
+        <li><a href='#users'onclick="f('users')" >Utilisateurs </a></li>
         <li><a href='#deco'>Déconnexion</a></li>
     </ul>
 </aside>
@@ -43,7 +53,7 @@
     <form method="post" action="Init">
         <p>Entrez votre pseudo :
             <input type="text" name="pseudo">
-            <input type="submit" value="Connexion">
+            <input type="submit" value="Connexion"> <!-- bouton -->
         </p>
     </form>
 </section>
@@ -127,5 +137,6 @@
         () => { show(window.location.hash); }
         );
 </script>
+<script type="text/javascript" src="ajax.js" ></script>
 </body>
 </html>
