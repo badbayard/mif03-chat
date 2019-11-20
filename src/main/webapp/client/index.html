@@ -3,6 +3,26 @@
 <head>
     <title>Mes Copains !</title>
     <meta charset="UTF-8">
+    <script src="jquery-3.4.1.min.js"></script>
+
+   <style>
+        .active {display: block;}
+        .inactive{display: none;}
+    </style>
+
+    <script>
+
+        function show(hash){
+            $('.active')
+                .removeClass('active')
+                .addClass('inactive');
+            $(hash)
+                .removeClass('inactive')
+                .addClass('active');
+        }
+
+    </script>
+
 </head>
 <body>
 <h1>Mes Copains (en AJAX) !</h1>
@@ -100,5 +120,12 @@
     </form>
     <p><a href='#index'>Retour à la page d'accueil</a></p>
 </section>
+<script>
+    //magique !!!
+    window.addEventListener(
+        'hashchange',
+        () => { show(window.location.hash); }
+        );
+</script>
 </body>
 </html>
