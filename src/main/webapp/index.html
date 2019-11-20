@@ -7,7 +7,7 @@
 
     <title>Mes copains !</title>
 </head>
-<body onload="hello()">
+<body onload="loadXMLAsynchroneously('GET','http://localhost:8080/jsp/time.jsp',null,'timeDiv')">
 <h1>Bienvenue sur Mes Copains !</h1>
 <form method="post" action="Groupes">
 
@@ -17,5 +17,6 @@
     </p>
     <input type="submit" value="Connexion">
 </form>
+<div id="timeDiv">Affichez l'heure ici...</div>
 </body>
 </html>

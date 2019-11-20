@@ -34,17 +34,17 @@
     </div>
 
 </head>
-<body onload="f()">
+<body>
 <h1>Mes Copains (en AJAX) !</h1>
 <div id="errMsg"></div>
 <aside>
     <h2>Menu</h2>
     <ul>
         <li><a href='#index'>Accueil</a></li>
-        <li><a href='#groupes'>Groupes</a></li>
-        <li><a href='#groupe'>Groupe</a></li>
-        <li><a href='#billet'>Billet</a></li>
-        <li><a href='#users'onclick="f('users')" >Utilisateurs </a></li>
+        <li><a href='#groupes' onclick="select('groupes')">Groupes</a></li>
+        <li><a href='#groupe' onclick="select('groupe')">Groupe</a></li>
+        <li><a href='#billet' onclick="select('billet')">Billet</a></li>
+        <li><a href='#users' onclick="select('users')" >Utilisateurs </a></li>
         <li><a href='#deco'>Déconnexion</a></li>
     </ul>
 </aside>
@@ -53,7 +53,7 @@
     <form method="post" action="Init">
         <p>Entrez votre pseudo :
             <input type="text" name="pseudo">
-            <input type="submit" value="Connexion"> <!-- bouton -->
+            <input type="submit" value="Connexion" onclick="select('pseudo')"> <!-- bouton -->
         </p>
     </form>
 </section>
@@ -130,6 +130,9 @@
     </form>
     <p><a href='#index'>Retour à la page d'accueil</a></p>
 </section>
+
+<div id="timeDiv">Affichez l'heure ici...</div>
+
 <script>
     //magique !!!
     window.addEventListener(
