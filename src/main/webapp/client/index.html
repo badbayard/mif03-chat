@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <script src="jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="mustache.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
    <style>
         .active {display: block;}
         .inactive{display: none;}
@@ -34,7 +35,7 @@
     </div>
 
 </head>
-<body>
+<body onload="loadXMLAsynchroneously('GET','http://localhost:8080/client/time.jsp',null,'timeDiv')">
 <h1>Mes Copains (en AJAX) !</h1>
 <div id="errMsg"></div>
 <aside>
