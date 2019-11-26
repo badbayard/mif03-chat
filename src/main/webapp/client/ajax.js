@@ -10,12 +10,26 @@ function refresh() {
 function select(action) {
 
     if(action == "billet") {
+
         var billet = {
             titre: "mon billet",
             contenue: " voici mon contenue",
             auteur: "toto",
             commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
         };
+        $.ajax({
+           //url:"https://192.168.75.13/api/v2/billet",
+            url:"http://localhost:8080/groupes/M1IF03",
+           type: "GET",
+            dataType:"json",
+            sucess : function (data, statut) {
+                console.log(data);
+            },
+            error: function (resultat, statut, error) {
+                console.log(error);
+            }
+        });
+
         var output = Mustache.render("titre {{titre}} contenue {{contenue}} auteur {{auteur}} commentaire {{commentaire}}", billet);
         $('#mu').html(output);
     }
@@ -39,6 +53,18 @@ function select(action) {
                     commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
                 }]
         };
+        $.ajax({
+            //url:"https://192.168.75.13/api/v2/billet",
+            url:"http://localhost:8080/groupes/M1IF03",
+            type: "GET",
+            dataType:"json",
+            sucess : function (data, statut) {
+                console.log(data);
+            },
+            error: function (resultat, statut, error) {
+                console.log(error);
+            }
+        });
         var output = Mustache.render("nom {{nom}} description {{description}} membres {{membres}} billets {{billets}}", Groupe);
         $('#mu').html(output);
     }
