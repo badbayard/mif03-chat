@@ -23,15 +23,26 @@ function select(action) {
            type: "GET",
             dataType:"json",
             sucess : function (data, statut) {
+                console.log("je suis une " + statut);
                 console.log(data);
             },
             error: function (resultat, statut, error) {
-                console.log(error);
+                console.log(statut);
             }
         });
 
-        var output = Mustache.render("titre {{titre}} contenue {{contenue}} auteur {{auteur}} commentaire {{commentaire}}", billet);
-        $('#mu').html(output);
+        //var output = Mustache.render("titre {{titre}} contenue {{contenue}} auteur {{auteur}} commentaire {{commentaire}}", billet);
+        var output_titre = Mustache.render("{{titre}}",billet);
+        var output_contenue = Mustache.render("{{contenue}}",billet);
+        var output_auteur = Mustache.render("{{auteur}}",billet);
+        var output_commentaire = Mustache.render("{{commentaire}}",billet);
+
+        $('#bltTitre').html(output_titre);
+        $('#commentList').html(output_commentaire);
+        $('#bltContenu').html(output_contenue);
+        $('#bltAuteur').html(output_auteur);
+
+
     }
 
     if(action == "groupe") {
@@ -65,8 +76,8 @@ function select(action) {
                 console.log(error);
             }
         });
-        var output = Mustache.render("nom {{nom}} description {{description}} membres {{membres}} billets {{billets}}", Groupe);
-        $('#mu').html(output);
+        var output = Mustache.render("{{description}}", Groupe);
+        $('#grpDesc').html(output);
     }
 
     var commentaire = {
@@ -80,7 +91,7 @@ function select(action) {
             groupes: ["Arverne", "Etrusque"]
         };
         var output = Mustache.render("Groupes {{groupes}}", Groupes);
-        $('#mu').html(output);
+        $('#groupesList').html(output);
     }
 
     var Billets = {
@@ -95,7 +106,7 @@ function select(action) {
             users: ["Asterix", "Obelix","Panoramix"]
         };
         var output = Mustache.render("Users {{users}}", Users);
-        $('#mu').html(output);
+        $('#usersList').html(output);
     }
 
     if(action == "pseudo") {
