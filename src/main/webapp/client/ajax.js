@@ -17,19 +17,54 @@ function select(action) {
             auteur: "toto",
             commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
         };
+        /*
         $.ajax({
-           //url:"https://192.168.75.13/api/v2/billet",
-            url:"http://localhost:8080/groupes/M1IF03",
+           url:"https://192.168.75.13/api/v2/groupes/toto",
            type: "GET",
-            dataType:"json",
-            sucess : function (data, statut) {
-                console.log("je suis une " + statut);
-                console.log(data);
+            headers: {
+               "Accept":"application/json",
+                //"Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b3RvIiwiYXVkIjoiaHR0cHM6Ly8xOTIuMTY4Ljc1LjEzL2FwaS92MiIsImNvciI6IkNvcnJlY3Rpb24iLCJpc3MiOiJNZXMgQ29wYWlucyIsImV4cCI6MTU3NDg3NDk4NH0.-WrGFuY-9BlSe6HuGIbmW-zmgXH7D7kEu1lMDjaIc_k"
+                //mettre autho pour get les autres sinon on peut recup que les groupes
+
+
+            },
+            sucess : function (data) {
+                console.log("j'ai reussi");
+                console.log("voici la data " + data);
             },
             error: function (resultat, statut, error) {
+                console.log("je suis la");
                 console.log(statut);
             }
         });
+        */
+
+
+        $.ajax({
+            url:"https://192.168.75.13/api/v2/users/login",
+            type: "POST",
+            contentType:"application/json",
+            headers: {
+                "Accept":"application/json",
+                //"Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b3RvIiwiYXVkIjoiaHR0cHM6Ly8xOTIuMTY4Ljc1LjEzL2FwaS92MiIsImNvciI6IkNvcnJlY3Rpb24iLCJpc3MiOiJNZXMgQ29wYWlucyIsImV4cCI6MTU3NDg3NDk4NH0.-WrGFuY-9BlSe6HuGIbmW-zmgXH7D7kEu1lMDjaIc_k"
+                //mettre autho pour get les autres sinon on peut recup que les groupes
+
+
+            },
+            data: "{ \"pseudo\" : \"toto\" }",
+            sucess : function (data,response) {
+                console.log("j'ai reussi");
+                console.log("voici la data " + data);
+            },
+            error: function (resultat, statut, error) {
+                console.log("je suis la");
+                console.log(statut);
+            }
+        }).done(function () {
+            console.log("yolool");
+        });
+
+
 
         //var output = Mustache.render("titre {{titre}} contenue {{contenue}} auteur {{auteur}} commentaire {{commentaire}}", billet);
         var output_titre = Mustache.render("{{titre}}",billet);
@@ -70,10 +105,10 @@ function select(action) {
             type: "GET",
             dataType:"json",
             sucess : function (data, statut) {
-                console.log(data);
+                //console.log(data);
             },
             error: function (resultat, statut, error) {
-                console.log(error);
+                //console.log(error);
             }
         });
         var output = Mustache.render("{{description}}", Groupe);
