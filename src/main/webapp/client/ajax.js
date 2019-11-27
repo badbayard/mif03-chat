@@ -35,7 +35,8 @@ function select(action) {
         var output_titre = Mustache.render("{{titre}}",billet);
         var output_contenue = Mustache.render("{{contenue}}",billet);
         var output_auteur = Mustache.render("{{auteur}}",billet);
-        var output_commentaire = Mustache.render("{{commentaire}}",billet);
+        //var output_commentaire = Mustache.render("{{commentaire}}",billet);
+        var output_commentaire = Mustache.render("{{#commentaire}} " + "<br/> {{.}} " + "{{/commentaire}}", billet);
 
         $('#bltTitre').html(output_titre);
         $('#commentList').html(output_commentaire);
@@ -56,13 +57,12 @@ function select(action) {
                 contenue: " voici mon contenue2",
                 auteur: "toto 2",
                 commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
-            },
-                {
+            }, {
                     titre: "mon billet 3",
                     contenue: " voici mon contenue 3",
                     auteur: "toto 3",
                     commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
-                }]
+                }],
         };
         $.ajax({
             //url:"https://192.168.75.13/api/v2/billet",
@@ -77,7 +77,12 @@ function select(action) {
             }
         });
         var output = Mustache.render("{{description}}", Groupe);
+        var output_billets = Mustache.render( "{{#billets}}" + "<cite contenteditable=\"true\"> {{titre}} <cite> <br/> {{/billets}}"  ,Groupe);
         $('#grpDesc').html(output);
+        $('#bltList').html(output_billets);
+
+
+
     }
 
     var commentaire = {
@@ -86,12 +91,16 @@ function select(action) {
     };
 
 
+
     if(action == "groupes") {
         var Groupes = {
             groupes: ["Arverne", "Etrusque"]
         };
-        var output = Mustache.render("Groupes {{groupes}}", Groupes);
-        $('#groupesList').html(output);
+        //var output = Mustache.render("Groupes {{groupes}}", Groupes);
+        var output_groupes = Mustache.render("Groupes : " +
+            "{{#groupes}} " + "<br/> {{.}} " + "{{/groupes}}", Groupes);
+
+        $('#groupesList').html(output_groupes);
     }
 
     var Billets = {
@@ -105,7 +114,8 @@ function select(action) {
         var Users = {
             users: ["Asterix", "Obelix","Panoramix"]
         };
-        var output = Mustache.render("Users {{users}}", Users);
+        //var output = Mustache.render("Users {{users}}", Users);
+        var output = Mustache.render("{{#users}} " + "<br/> {{.}} " + "{{/users}}", Users);
         $('#usersList').html(output);
     }
 
