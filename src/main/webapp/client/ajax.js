@@ -1,4 +1,4 @@
-
+var token;
 function hello() {
     console.log("hello world");
 }
@@ -6,6 +6,7 @@ function hello() {
 function refresh() {
     setTimeout("refresh();",5000);
 }
+
 
 function select(action) {
 
@@ -17,28 +18,6 @@ function select(action) {
             auteur: "toto",
             commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
         };
-        /*
-        $.ajax({
-           url:"https://192.168.75.13/api/v2/groupes/toto",
-           type: "GET",
-            headers: {
-               "Accept":"application/json",
-                //"Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b3RvIiwiYXVkIjoiaHR0cHM6Ly8xOTIuMTY4Ljc1LjEzL2FwaS92MiIsImNvciI6IkNvcnJlY3Rpb24iLCJpc3MiOiJNZXMgQ29wYWlucyIsImV4cCI6MTU3NDg3NDk4NH0.-WrGFuY-9BlSe6HuGIbmW-zmgXH7D7kEu1lMDjaIc_k"
-                //mettre autho pour get les autres sinon on peut recup que les groupes
-
-
-            },
-            sucess : function (data) {
-                console.log("j'ai reussi");
-                console.log("voici la data " + data);
-            },
-            error: function (resultat, statut, error) {
-                console.log("je suis la");
-                console.log(statut);
-            }
-        });
-        */
-
 
         $.ajax({
             url:"https://192.168.75.13/api/v2/users/login",
@@ -46,6 +25,7 @@ function select(action) {
             contentType:"application/json",
             headers: {
                 "Accept":"application/json",
+                'Authorization': token,
                 //"Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b3RvIiwiYXVkIjoiaHR0cHM6Ly8xOTIuMTY4Ljc1LjEzL2FwaS92MiIsImNvciI6IkNvcnJlY3Rpb24iLCJpc3MiOiJNZXMgQ29wYWlucyIsImV4cCI6MTU3NDg3NDk4NH0.-WrGFuY-9BlSe6HuGIbmW-zmgXH7D7kEu1lMDjaIc_k"
                 //mettre autho pour get les autres sinon on peut recup que les groupes
 
@@ -60,9 +40,42 @@ function select(action) {
                 console.log("je suis la");
                 console.log(statut);
             }
-        }).done(function () {
-            console.log("yolool");
+
+        }).done(function (data,response , head) {
+            console.log(head.getResponseHeader("Authorization"));
+            token = head.getResponseHeader("Authorization");
         });
+
+
+
+        $.ajax({
+           url:"https://192.168.75.13/api/v2/groupes/toto",
+           type: "GET",
+            headers: {
+               "Accept":"application/json",
+                //'Authorization': token,
+                //"Authorization": token,
+                beforeSend: function(request) {
+                    request.setRequestHeader("Authorization", token);
+                },
+                //mettre autho pour get les autres sinon on peut recup que les groupes
+
+
+            },
+            sucess : function (data) {
+                console.log("j'ai reussi");
+                console.log("voici la data " + data);
+            },
+            error: function (resultat, statut, error) {
+                console.log("je suis la");
+                console.log("token : " + token)
+                console.log(statut);
+            }
+        }).done(function (data,response , head) {
+            console.log("ok dans le Get")
+        });
+
+
 
 
 
