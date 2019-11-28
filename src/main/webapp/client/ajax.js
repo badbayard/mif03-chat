@@ -39,7 +39,6 @@ function gettoken() {
     }).done(function (data,response , head) {
     });
 }
-
 gettoken();
 
 function select(action) {
@@ -108,9 +107,6 @@ function select(action) {
         });
 
 
-
-
-
         //var output = Mustache.render("titre {{titre}} contenue {{contenue}} auteur {{auteur}} commentaire {{commentaire}}", billet);
         var output_titre = Mustache.render("{{titre}}",billet);
         var output_contenue = Mustache.render("{{contenue}}",billet);
@@ -122,8 +118,6 @@ function select(action) {
         $('#commentList').html(output_commentaire);
         $('#bltContenu').html(output_contenue);
         $('#bltAuteur').html(output_auteur);
-
-
     }
 
     if(action == "groupe") {
@@ -195,7 +189,7 @@ function select(action) {
                 groupes: data
             };
             var output_groupes = Mustache.render("Groupes : " +
-                "{{#groupes}} " + "<br/> {{.}} " + "{{/groupes}}", Groupes);
+                "<li class=\"list-group-item\">"+"{{#groupes}} " + "<br/> {{.}} " + "{{/groupes}}" + "</li>", Groupes);
             $('#groupesList').html(output_groupes);
         });
 
