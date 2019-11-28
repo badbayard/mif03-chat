@@ -7,11 +7,44 @@ function refresh() {
     setTimeout("refresh();",5000);
 }
 
+function gettoken() {
+    $.ajax({
+        url:"https://192.168.75.13/api/v2/users/login",
+        type: "POST",
+        contentType:"application/json",
+        headers: {
+            "Accept":"application/json",
+            'Authorization': token,
+        },
+        data: "{ \"pseudo\" : \"toto\" }",
+        sucess : function (data,response) {
+        },
+        error: function (resultat, statut, error) {
+        }
+
+    }).done(function (data,response , head) {
+        token = head.getResponseHeader("Authorization");
+    });
+    $.ajax({
+        url:"https://192.168.75.13/api/v2/groupes/toto",
+        type: "GET",
+        headers: {
+            "Accept":"application/json",
+            beforeSend: function(request) {
+                request.setRequestHeader("Authorization", token);
+            },
+        },
+        error: function (resultat, statut, error) {
+        }
+    }).done(function (data,response , head) {
+    });
+}
+
+gettoken();
 
 function select(action) {
 
     if(action == "billet") {
-
         var billet = {
             titre: "mon billet",
             contenue: " voici mon contenue",
@@ -140,19 +173,11 @@ function select(action) {
 
 
     if(action == "groupes") {
-
         $.ajax({
             url:"https://192.168.75.13/api/v2/groupes",
             type: "GET",
             headers: {
                 "Accept":"application/json",
-
-//                beforeSend: function(request) {
-//                    request.setRequestHeader("Authorization", token);
-//                },
-                //mettre autho pour get les autres sinon on peut recup que les groupes
-
-
             },
             sucess : function (data) {
                 console.log("j'ai reussi");
@@ -163,7 +188,7 @@ function select(action) {
                 console.log(statut);
             }
         }).done(function (data,response , head) {
-            console.log("ok dans le Get")
+            console.log("Get groupe OK")
             console.log(response);
             console.log("data" + data);
             var Groupes = {
@@ -183,13 +208,30 @@ function select(action) {
     var Commentaires = {
         commentaires: ["yolo1", "yolo2"]
     };
+
     if(action == "users"){
-        var Users = {
-            users: ["Asterix", "Obelix","Panoramix"]
-        };
-        //var output = Mustache.render("Users {{users}}", Users);
-        var output = Mustache.render("{{#users}} " + "<br/> {{.}} " + "{{/users}}", Users);
-        $('#usersList').html(output);
+        $.ajax({
+            url:"https://192.168.75.13/api/v2/users",
+            type: "GET",
+            headers: {
+                "Accept":"application/json",
+                "Authorization": token
+            },
+
+            error: function (resultat, statut, error) {
+                console.log("token : " + token)
+                console.log(statut);
+            }
+            }).done(function (data,response , head) {
+                console.log("Get user OK")
+                console.log(response);
+                console.log("data" + data);
+                var Users = {
+                    users: data
+                };
+                var output = Mustache.render("{{#users}} " + "<br/> {{.}} " + "{{/users}}", Users);
+                $('#usersList').html(output);
+            });
     }
 
     if(action == "pseudo") {
