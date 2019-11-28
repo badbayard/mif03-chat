@@ -67,7 +67,6 @@ function select(action) {
                 console.log("voici la data " + data);
             },
             error: function (resultat, statut, error) {
-                console.log("je suis la");
                 console.log("token : " + token)
                 console.log(statut);
             }
@@ -114,7 +113,7 @@ function select(action) {
         };
         $.ajax({
             //url:"https://192.168.75.13/api/v2/billet",
-            url:"http://localhost:8080/groupes/M1IF03",
+            url:"http://localhost:8080/groupes",
             type: "GET",
             dataType:"json",
             sucess : function (data, statut) {
@@ -141,14 +140,40 @@ function select(action) {
 
 
     if(action == "groupes") {
-        var Groupes = {
-            groupes: ["Arverne", "Etrusque"]
-        };
-        //var output = Mustache.render("Groupes {{groupes}}", Groupes);
-        var output_groupes = Mustache.render("Groupes : " +
-            "{{#groupes}} " + "<br/> {{.}} " + "{{/groupes}}", Groupes);
 
-        $('#groupesList').html(output_groupes);
+        $.ajax({
+            url:"https://192.168.75.13/api/v2/groupes",
+            type: "GET",
+            headers: {
+                "Accept":"application/json",
+
+//                beforeSend: function(request) {
+//                    request.setRequestHeader("Authorization", token);
+//                },
+                //mettre autho pour get les autres sinon on peut recup que les groupes
+
+
+            },
+            sucess : function (data) {
+                console.log("j'ai reussi");
+                console.log("voici la data " + data);
+            },
+            error: function (resultat, statut, error) {
+                console.log("token : " + token)
+                console.log(statut);
+            }
+        }).done(function (data,response , head) {
+            console.log("ok dans le Get")
+            console.log(response);
+            console.log("data" + data);
+            var Groupes = {
+                groupes: data
+            };
+            var output_groupes = Mustache.render("Groupes : " +
+                "{{#groupes}} " + "<br/> {{.}} " + "{{/groupes}}", Groupes);
+            $('#groupesList').html(output_groupes);
+        });
+
     }
 
     var Billets = {
