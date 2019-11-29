@@ -30,83 +30,6 @@ gettoken();
 
 function select(action) {
 
-    if(action == "billet") {
-        var billet = {
-            titre: "mon billet",
-            contenue: " voici mon contenue",
-            auteur: "toto",
-            commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
-        };
-
-        $.ajax({
-            url:"https://192.168.75.13/api/v2/users/login",
-            type: "POST",
-            contentType:"application/json",
-            headers: {
-                "Accept":"application/json",
-                'Authorization': token,
-                //"Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b3RvIiwiYXVkIjoiaHR0cHM6Ly8xOTIuMTY4Ljc1LjEzL2FwaS92MiIsImNvciI6IkNvcnJlY3Rpb24iLCJpc3MiOiJNZXMgQ29wYWlucyIsImV4cCI6MTU3NDg3NDk4NH0.-WrGFuY-9BlSe6HuGIbmW-zmgXH7D7kEu1lMDjaIc_k"
-                //mettre autho pour get les autres sinon on peut recup que les groupes
-
-
-            },
-            data: "{ \"pseudo\" : \"toto\" }",
-            sucess : function (data,response) {
-                console.log("j'ai reussi");
-                console.log("voici la data " + data);
-            },
-            error: function (resultat, statut, error) {
-                console.log("je suis la");
-                console.log(statut);
-            }
-
-        }).done(function (data,response , head) {
-            console.log(head.getResponseHeader("Authorization"));
-            token = head.getResponseHeader("Authorization");
-        });
-
-
-
-        $.ajax({
-           url:"https://192.168.75.13/api/v2/groupes/toto",
-           type: "GET",
-            headers: {
-               "Accept":"application/json",
-                //'Authorization': token,
-                //"Authorization": token,
-                beforeSend: function(request) {
-                    request.setRequestHeader("Authorization", token);
-                },
-                //mettre autho pour get les autres sinon on peut recup que les groupes
-
-
-            },
-            sucess : function (data) {
-                console.log("j'ai reussi");
-                console.log("voici la data " + data);
-            },
-            error: function (resultat, statut, error) {
-                console.log("token : " + token)
-                console.log(statut);
-            }
-        }).done(function (data,response , head) {
-            console.log("ok dans le Get")
-        });
-
-
-        //var output = Mustache.render("titre {{titre}} contenue {{contenue}} auteur {{auteur}} commentaire {{commentaire}}", billet);
-        var output_titre = Mustache.render("{{titre}}",billet);
-        var output_contenue = Mustache.render("{{contenue}}",billet);
-        var output_auteur = Mustache.render("{{auteur}}",billet);
-        //var output_commentaire = Mustache.render("{{commentaire}}",billet);
-        var output_commentaire = Mustache.render("{{#commentaire}} " + "<br/> {{.}} " + "{{/commentaire}}", billet);
-
-        $('#bltTitre').html(output_titre);
-        $('#commentList').html(output_commentaire);
-        $('#bltContenu').html(output_contenue);
-        $('#bltAuteur').html(output_auteur);
-    }
-
     if(action == "groupe") {
 
         var Groupe = {
@@ -208,7 +131,7 @@ function select(action) {
     }
 
     var Billets = {
-        billets:["b1","b2"]
+        billets: ["b1", "b2"]
     };
 
     var Commentaires = {
@@ -266,6 +189,97 @@ function select(action) {
             $('#mu').html(output);
         });
 
+    }
+
+
+
+    if(action == "billet") {
+        console.log(name_groupe);
+        name_groupe = "essa1";
+        var billet = {
+            titre: "mon billet",
+            contenue: " voici mon contenue",
+            auteur: "toto",
+            commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
+        };
+
+        $.ajax({
+            url:"https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets",
+            type:"GET",
+            contentType:"application/json",
+            headers: {
+                "Accept":"application/json",
+                'Authorization': token,
+            },
+            error: function (resultat, statut, error) {
+                console.log("je suis la");
+                console.log(statut);
+            }
+        }).done(function (data,response , head) {
+            console.log(head.getResponseHeader("Authorization"));
+            token = head.getResponseHeader("Authorization");
+        });
+        /*
+        $.ajax({
+            url:"https://192.168.75.13/api/v2/users/login",
+            type: "POST",
+            contentType:"application/json",
+            headers: {
+                "Accept":"application/json",
+                'Authorization': token,
+                //"Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b3RvIiwiYXVkIjoiaHR0cHM6Ly8xOTIuMTY4Ljc1LjEzL2FwaS92MiIsImNvciI6IkNvcnJlY3Rpb24iLCJpc3MiOiJNZXMgQ29wYWlucyIsImV4cCI6MTU3NDg3NDk4NH0.-WrGFuY-9BlSe6HuGIbmW-zmgXH7D7kEu1lMDjaIc_k"
+                //mettre autho pour get les autres sinon on peut recup que les groupes
+
+
+            },
+            data: "{ \"pseudo\" : \"toto\" }",
+            error: function (resultat, statut, error) {
+                console.log("je suis la");
+                console.log(statut);
+            }
+
+        }).done(function (data,response , head) {
+            console.log(head.getResponseHeader("Authorization"));
+            token = head.getResponseHeader("Authorization");
+        });
+
+
+
+        $.ajax({
+           url:"https://192.168.75.13/api/v2/groupes/toto",
+           type: "GET",
+            headers: {
+               "Accept":"application/json",
+                //'Authorization': token,
+                //"Authorization": token,
+                beforeSend: function(request) {
+                    request.setRequestHeader("Authorization", token);
+                },
+                //mettre autho pour get les autres sinon on peut recup que les groupes
+
+
+            },
+            error: function (resultat, statut, error) {
+                console.log("token : " + token)
+                console.log(statut);
+            }
+        }).done(function (data,response , head) {
+            console.log("ok dans le Get")
+        });
+
+
+        //var output = Mustache.render("titre {{titre}} contenue {{contenue}} auteur {{auteur}} commentaire {{commentaire}}", billet);
+        var output_titre = Mustache.render("{{titre}}",billet);
+        var output_contenue = Mustache.render("{{contenue}}",billet);
+        var output_auteur = Mustache.render("{{auteur}}",billet);
+        //var output_commentaire = Mustache.render("{{commentaire}}",billet);
+        var output_commentaire = Mustache.render("{{#commentaire}} " + "<br/> {{.}} " + "{{/commentaire}}", billet);
+
+        $('#bltTitre').html(output_titre);
+        $('#commentList').html(output_commentaire);
+        $('#bltContenu').html(output_contenue);
+        $('#bltAuteur').html(output_auteur);
+        */
     }
 }
 
