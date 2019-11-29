@@ -70,10 +70,11 @@
         - supprimer le groupe
         Les résultats de l'opération invoquée par le client seront affichés dans le div "errMsg" -->
     <ul id='groupesList' class="list-group"></ul>
-    <form method="post" action="CreateGroupe">
+    <form method="post" action="CreateGroupe" name="groupe">
         <p>Créer un nouveau groupe :
-            <input type="text" name="groupe">
-            <input type="submit" value="Créer" class="btn btn-primary">
+            <input placeholder="nom groupe" type="text" name="groupe" class="form-control left-rounded" id="groupe">
+            <input placeholder="descrciption" type="text" name="desc" class="form-control left-rounded" id="desc">
+            <button type="button" value="Créer" class="btn btn-success" onclick="select('groupes')">envoyer </button>
         </p>
     </form>
     <p><a href='#deco'>Déconnexion</a></p>

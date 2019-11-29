@@ -108,6 +108,7 @@ function select(action) {
     }
 
     if(action == "groupe") {
+
         var Groupe = {
             nom: "Jesus",
             description: "je suis nee a noel",
@@ -125,18 +126,23 @@ function select(action) {
                     commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
                 }],
         };
+
+        /*
         $.ajax({
-            //url:"https://192.168.75.13/api/v2/billet",
-            url:"http://localhost:8080/groupes",
-            type: "GET",
-            dataType:"json",
-            sucess : function (data, statut) {
-                //console.log(data);
+            url:"https://192.168.75.13/api/v2/groupes/toto",
+            type: "POST",
+            contentType:"application/json",
+            headers: {
+                "Accept":"application/json",
+                'Authorization': token,
             },
+            data: "{ \"pseudo\" : \""+pseudo+"\" }",
             error: function (resultat, statut, error) {
-                //console.log(error);
             }
+        }).done(function (data,response , head) {
+            console.log("ok POST groupe")
         });
+        */
         var output = Mustache.render("{{description}}", Groupe);
         var output_billets = Mustache.render( "{{#billets}}" + "<cite contenteditable=\"true\"> {{titre}} <cite> <br/> {{/billets}}"  ,Groupe);
         $('#grpDesc').html(output);
@@ -154,6 +160,9 @@ function select(action) {
 
 
     if(action == "groupes") {
+        name_groupe = null;
+        var name_groupe =  $('#groupe').val();
+        var desc = $('#desc').val();
         $.ajax({
             url:"https://192.168.75.13/api/v2/groupes",
             type: "GET",
@@ -180,6 +189,22 @@ function select(action) {
             $('#groupesList').html(output_groupes);
         });
 
+        if(name_groupe != null){
+            $.ajax({
+                url:"https://192.168.75.13/api/v2/groupes",
+                type: "POST",
+                contentType:"application/json",
+                headers: {
+                    "Accept":"application/json",
+                    'Authorization': token,
+                },
+                data: "{ \"nom\" : \""+name_groupe+"\" " + ", \"description\" : \""+desc+"\" }",
+                error: function (resultat, statut, error) {
+                }
+            }).done(function (data,response , head) {
+                console.log("ok POST groupe")
+            });
+        }
     }
 
     var Billets = {
