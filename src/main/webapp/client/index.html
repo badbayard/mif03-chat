@@ -54,10 +54,10 @@
 </aside>
 <section id='index' class='active'>
     <h2>Bienvenue sur Chatons.org</h2>
-    <form method="post" action="Init">
+    <form method="post" href="#" name="pseudo" >
             <p>Entrez votre pseudo :
-                <input type="text" name="pseudo" class="form-control left-rounded">
-                <input type="submit" value="Connexion" class="btn btn-primary" onclick="select('pseudo')"> <!-- bouton -->
+                <input type="text" name="pseudo" class="form-control left-rounded" id ="pseudo">
+                <button type="button" value="Connexion" class="btn btn-success" onclick="select('pseudo')" >Connexion</button> <!-- bouton -->
             </p>
     </form>
 </section>

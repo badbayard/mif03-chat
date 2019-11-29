@@ -25,19 +25,6 @@ function gettoken() {
     }).done(function (data,response , head) {
         token = head.getResponseHeader("Authorization");
     });
-    $.ajax({
-        url:"https://192.168.75.13/api/v2/groupes/toto",
-        type: "GET",
-        headers: {
-            "Accept":"application/json",
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", token);
-            },
-        },
-        error: function (resultat, statut, error) {
-        }
-    }).done(function (data,response , head) {
-    });
 }
 gettoken();
 
@@ -228,12 +215,32 @@ function select(action) {
             });
     }
 
+
+
     if(action == "pseudo") {
-        var Pseudo = {
-            pseudo: "le roi de la Gaulle"
-        };
-        var output = Mustache.render("Pseudo {{pseudo}}",Pseudo);
-        $('#mu').html(output);
+
+        var pseudo =  $('#pseudo').val();
+        $.ajax({
+            url:"https://192.168.75.13/api/v2/users/login",
+            type: "POST",
+            contentType:"application/json",
+            headers: {
+                "Accept":"application/json",
+                'Authorization': token,
+            },
+            data: "{ \"pseudo\" : \""+pseudo+"\" }",
+            error: function (resultat, statut, error) {
+            }
+
+        }).done(function (data,response , head) {
+            token = head.getResponseHeader("Authorization");
+            var Pseudo = {
+                pseudo: pseudo
+            };
+            var output = Mustache.render("Pseudo {{pseudo}}",Pseudo);
+            $('#mu').html(output);
+        });
+
     }
 }
 
