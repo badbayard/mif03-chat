@@ -113,7 +113,7 @@ function select(action) {
             $('#groupesList').html(output_groupes);
         });
 
-        if(name_groupe != null){
+        if(name_groupe != ""){
             $.ajax({
                 url:"https://192.168.75.13/api/v2/groupes",
                 type: "POST",
