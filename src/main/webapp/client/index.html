@@ -110,10 +110,10 @@
         - supprimer le commentaire
     -->
     <ul id='commentList' class="list-group"></ul>
-    <form method="post" action="Commentaires">
+    <form method="post" name="commentaire">
         <p>Ajouter un commentaire :
-            <input type="text" name="commentaire">
-            <input type="submit" value="Envoyer" class="btn btn-primary">
+            <input type="text" name="commentaire" id="commentaire">
+            <button type="submit" value="Envoyer" class="btn btn-success" onclick="select('commentaire')">Envoyer </button>
         </p>
     </form>
     <p><a href="#groupe">Retour au groupe</a></p>

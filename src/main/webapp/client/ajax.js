@@ -196,7 +196,6 @@ function select(action) {
 
     if(action == "billet") {
         console.log(name_groupe);
-        //name_groupe = "essa1";
         var billet = {
             titre: "mon billet",
             contenue: " voici mon contenue",
@@ -213,13 +212,14 @@ function select(action) {
                 'Authorization': token,
             },
             error: function (resultat, statut, error) {
-                console.log("je suis la");
                 console.log(statut);
             }
         }).done(function (data,response , head) {
             console.log(head.getResponseHeader("Authorization"));
             token = head.getResponseHeader("Authorization");
         });
+
+
         /*
         $.ajax({
             url:"https://192.168.75.13/api/v2/users/login",
@@ -281,6 +281,12 @@ function select(action) {
         $('#bltContenu').html(output_contenue);
         $('#bltAuteur').html(output_auteur);
         */
+    }
+
+    if(action == "commentaire"){
+        console.log("je suis dans le if de commentaire");
+        var commentaire =  $('#commentaire').val();
+        console.log("contenue du commentaire : "+commentaire);
     }
 }
 
