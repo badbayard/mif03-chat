@@ -1,4 +1,5 @@
 var token;
+var name_groupe="";
 function hello() {
     console.log("hello world");
 }
@@ -26,7 +27,7 @@ function gettoken() {
         token = head.getResponseHeader("Authorization");
     });
 }
-gettoken();
+//gettoken();
 
 function select(action) {
 
@@ -84,7 +85,7 @@ function select(action) {
 
     if(action == "groupes") {
         name_groupe = null;
-        var name_groupe =  $('#groupe').val();
+        name_groupe =  $('#groupe').val();
         var desc = $('#desc').val();
         $.ajax({
             url:"https://192.168.75.13/api/v2/groupes",
@@ -195,7 +196,7 @@ function select(action) {
 
     if(action == "billet") {
         console.log(name_groupe);
-        name_groupe = "essa1";
+        //name_groupe = "essa1";
         var billet = {
             titre: "mon billet",
             contenue: " voici mon contenue",
