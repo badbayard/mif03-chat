@@ -1,5 +1,6 @@
 var token;
 var name_groupe="";
+var index_billet = -1 ;
 function hello() {
     console.log("hello world");
 }
@@ -74,53 +75,7 @@ function select(action) {
 
     }
 
-    if(action == 'billets') {
-        var titre ="";
-        titre =  $('#titre').val();
-        var desc = $('#contenu').val();
 
-        console.log("titre : " + titre + " contenu : " + desc );
-
-        if(titre == "") {
-                $.ajax({
-                    url: "https://192.168.75.13/api/v2/billets",
-                    type: "GET",
-                    headers: {
-                        "Accept": "application/json",
-                    },
-                    sucess: function (data) {
-                        console.log(data);
-                    },
-                    error: function (resultat, statut, error) {
-                        console.log(statut);
-                    }
-                }).done(function (data) {
-                    var Groupe = {
-                        billets: data
-                    };
-                    var output_billets = Mustache.render("Billets : " +
-                        "<li class=\"list-group-item\">" + "{{#billets}} " + "<br/> {{titre}} " + "{{/billets}}" + "</li>", Groupe);
-                    $('#output_billets').html(output_billets);
-                });
-        }
-        else {
-
-            $.ajax({
-                url:"https://192.168.75.13/api/v2/billets",
-                type: "POST",
-                contentType:"application/json",
-                headers: {
-                    "Accept":"application/json",
-                    'Authorization': token,
-                },
-                data: "{ \"titre\" : \""+titre+"\" " + ", \"contenu\" : \""+desc+"\" }",
-                error: function (resultat, statut, error) {
-                }
-            }).done(function () {
-                console.log("ok POST billets")
-            });
-        }
-    }
 
     var commentaire = {
         auteur:"vercingetorix",
@@ -334,6 +289,61 @@ function select(action) {
         var commentaire =  $('#commentaire').val();
         console.log("contenue du commentaire : "+commentaire);
     }
+
+    if(action == 'billets') {
+        var titre ="";
+        titre =  $('#titre').val();
+        var desc = $('#contenu').val();
+
+        console.log("titre : " + titre + " contenu : " + desc );
+
+        if(titre == "") {
+            $.ajax({
+                url: "https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets/"+index_billet,
+                type: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    'Authorization': token,
+                },
+                sucess: function (data) {
+                    console.log(data);
+                },
+                error: function (resultat, statut, error) {
+                    console.log(statut);
+                }
+            }).done(function (data) {
+                var Groupe = {
+                    billets: data
+                };
+                //var output_billets = Mustache.render( "{{#billets}}" + "<cite contenteditable=\"true\"> {{titre}} <cite> <br/> {{/billets}}"  ,Groupe)
+                var output_billets = Mustache.render("<li class=\"list-group-item\">" + "{{#billets}} " +"<cite contenteditable=\"true\">" + "<br/> {{titre}} "+" "+" {{contenu}} " + "<cite>" + "{{/billets}}" + "</li>", Groupe);
+                $('#bltList').html(output_billets);
+            });
+        }
+        else {
+
+            $.ajax({
+                url:"https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets",
+                type: "POST",
+                contentType:"application/json",
+                headers: {
+                    "Accept":"application/json",
+                    'Authorization': token,
+                },
+                data: "{ \"titre\" : \""+titre+"\" " + ", \"contenu\" : \""+desc+"\" }",
+                error: function (resultat, statut, error) {
+                }
+            }).done(function () {
+                console.log("ok POST billets")
+                index_billet = index_billet + 1;
+            });
+        }
+    }
+
+
+
+
+
 }
 
 

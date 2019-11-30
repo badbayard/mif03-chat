@@ -91,12 +91,12 @@
     -->
     <ul id='bltList' class="list-group"></ul>
     <hr>
-    <form method='post' action='Billets'>
+    <form method='post' >
         <p>Créer un nouveau billet :
-            <input type='text' name='titre'>
-            <textarea name="contenu"></textarea>
+            <input type='text' name='titre' id ="titre">
+            <textarea name="contenu" id ="contenu"></textarea>
             <!--input type='submit' value='Envoyer' onclick="select('billets')" class="btn btn-primary"!-->
-            <button type="submit" value="Envoyer" class="btn btn-success" onclick="select('billets')">Envoyer </button>
+            <button type="button" value="Envoyer" class="btn btn-success" onclick="select('billets')">Envoyer </button>
         </p>
     </form>
     <p><a href='#groupes'>Liste des groupes</a></p>
