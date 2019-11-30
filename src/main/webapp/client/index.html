@@ -46,7 +46,7 @@
     <ul class="list-group">
         <li class="list-group-item"><a href='#index'>Accueil</a></li>
         <li class="list-group-item"><a href='#groupes' onclick="select('groupes')">Groupes</a></li>
-        <li class="list-group-item"><a href='#groupe' onclick="select('groupe')">Groupe</a></li>
+        <li class="list-group-item"><a href='#grp' onclick="select('groupe')">Groupe</a></li>
         <li class="list-group-item"><a href='#billet' onclick="select('billet')">Billet</a></li>
         <li class="list-group-item"><a href='#users' onclick="select('users')" >Utilisateurs </a></li>
         <li class="list-group-item"><a href='#deco'>Déconnexion</a></li>
@@ -79,7 +79,7 @@
     </form>
     <p><a href='#deco'>Déconnexion</a></p>
 </section>
-<section id='groupe' class='inactive'>
+<section id='grp' class='inactive'>
     <h2>Groupe ...</h2>
     <h3>Description</h3>
     <p id="grpDesc"></p>
@@ -95,7 +95,8 @@
         <p>Créer un nouveau billet :
             <input type='text' name='titre'>
             <textarea name="contenu"></textarea>
-            <input type='submit' value='Envoyer' class="btn btn-primary">
+            <!--input type='submit' value='Envoyer' onclick="select('billets')" class="btn btn-primary"!-->
+            <button type="submit" value="Envoyer" class="btn btn-success" onclick="select('billets')">Envoyer </button>
         </p>
     </form>
     <p><a href='#groupes'>Liste des groupes</a></p>
