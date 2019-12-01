@@ -33,7 +33,7 @@ function gettoken() {
 function select(action) {
 
     if(action == "groupe") {
-
+        /*
         var Groupe = {
             nom: "Jesus",
             description: "je suis nee a noel",
@@ -51,27 +51,28 @@ function select(action) {
                     commentaire: ["c1", "c2", "c3", " il fait beau on est en retard"]
                 }],
         };
+        */
 
-        /*
+
         $.ajax({
-            url:"https://192.168.75.13/api/v2/groupes/toto",
-            type: "POST",
+            url:"https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets",
+            type: "GET",
             contentType:"application/json",
             headers: {
                 "Accept":"application/json",
                 'Authorization': token,
             },
-            data: "{ \"pseudo\" : \""+pseudo+"\" }",
             error: function (resultat, statut, error) {
             }
         }).done(function (data,response , head) {
-            console.log("ok POST groupe")
+            var Groupe={
+                Groupe:data
+            };
+            //var output = Mustache.render("{{description}}", desc);
+            var output_billets = Mustache.render( "{{#Groupe}}" + "<cite contenteditable=\"true\"> {{.}} <cite> <br/> {{/Groupe}}"  ,Groupe);
+            //$('#grpDesc').html(output);
+            $('#bltList').html(output_billets);
         });
-        */
-        var output = Mustache.render("{{description}}", Groupe);
-        var output_billets = Mustache.render( "{{#billets}}" + "<cite contenteditable=\"true\"> {{titre}} <cite> <br/> {{/billets}}"  ,Groupe);
-        $('#grpDesc').html(output);
-        $('#bltList').html(output_billets);
 
     }
 
@@ -279,10 +280,8 @@ function select(action) {
     }
 
     if(action == "commentaire"){
-        console.log("je suis dans le if de commentaire");
         var commentaire =  $('#commentaire').val();
-        console.log("contenue du commentaire : "+commentaire);
-
+        console.log("la valeur du token : "+token);
         $.ajax({
             url: "https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets/"+index_billet+"/commentaires",
             type: "GET",
