@@ -47,7 +47,7 @@ Nous avons fais au mieux et ce TP sera surement poursuivi d'ici le TP5.
 (to be continued ...)
 
 ##### Programmation côté client
-notre client dispose du différent fichier qui sont:
+Notre client dispose de différents fichier qui sont:
 - ajax.js
 - index.html
 - jquery-3.4.1.min.js
@@ -56,22 +56,23 @@ notre client dispose du différent fichier qui sont:
 
 l'interface du client se trouve dans index.html, et le code JS pour lancer et traiter le ajax se trouve dans le fichier
 ajax.js, le client dispose de feuille de style bootstrap.
-Elle se compose d'un menu avec différents éléments (accueil, groupes, Groupe, Billet Utilisateurs,Déconnexion).
+Elle se compose d'un menu avec différents éléments (accueil, groupes, groupe, billet, utilisateurs,déconnexion).
 - Accueil : on trouve un champ pour enregistrer le pseudo qui l'ajoute avec une requete ajax sur la vm
-- Groupes : si vous avez rentré un pseudo avant, il permet de faire la liste des groupes déja enregisterer, et en bas on
-trouve une zone de saisie pour créer un nouveau groupe.
-- Groupe : avant de cliquer sur groupe il faut avoir un Peudo puis un groupe, ensuite on peut cliquer sur Groupe, ce qui permet de créer un billet, ou de le récuperer.
-pour récupere un billet qui existe il suffit juste de remplir le premier champ et laisser vide la description et envoyer.
-- Billet permet de mettre un commentaire et de voir la liste des commentaires.
+- Groupes : si un utilisateur est connecté , il permet de lister les groupes pour notre utilisateur , on peux egalement créer un nouveau groupe.
+- Groupe : avant de cliquer sur groupe il faut etre connecté, permet de créer ou récuperer un billet.
+On récupere le billet en laissant les champs du formulaire vide.
+- Billet : permet d'ajouter un commentaire et de voir la liste des commentaires.
 - Utilisateur : permet d'afficher la liste des utilisateurs.
-- Déconnexion: permet de changer d'utilisateur.
+- Déconnexion: permet de déconnecter l'utilisateur en cours.
 
-pour l'utilisation il faut d'abord crée un utilisateur ---> crée un groupe ---> crée un billet
-quand on a crée un utilisateur on peut ensuite faire les GET pour avoir la liste de groupes ou utilisateur.
+
+###### cas d'utilisation
+pour l'utilisation il faut d'abord créer un utilisateur ---> créer un groupe ---> créer un billet
+quand on a créer un utilisateur on peut ensuite faire les GET pour avoir la liste de groupes ou utilisateur.
 
 Le code de l'horloge se trouve dans ajax.js, mais n'est pas lancé.
 
-#### VM
+##### VM
 - http://192.168.75.33:8080/v1/
 - https://192.168.75.33/api/v1/
 - http://192.168.75.33:8080/v2/
