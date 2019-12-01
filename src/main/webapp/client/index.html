@@ -128,10 +128,11 @@
 </section>
 <section id='deco' class='inactive'>
     <h2>Déconnexion</h2>
-    <form method="post" action="Deco">
+    <form method="post">
         <p>Validez ce formulaire pour vous déconnecter :
-            <input type="checkbox" name="user"> Supprimer l'utilisateur
-            <input type="submit" value="Deconnexion" class="btn btn-primary">
+            <input type="checkbox" name="user" id ="chkbox"> Supprimer l'utilisateur
+            <!--input type="submit" value="Deconnexion" class="btn btn-primary"!-->
+            <button type="button" value="Deconnexion" class="btn btn-success" onclick="select('deco')">Envoyer </button>
         </p>
     </form>
     <p><a href='#index'>Retour à la page d'accueil</a></p>

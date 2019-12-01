@@ -340,6 +340,34 @@ function select(action) {
         }
     }
 
+    if(action == 'deco') {
+        console.log("deco");
+        var checkbox =   $('#chkbox').is(":checked");
+        var pseudo =  $('#name').val();
+
+            $.ajax({
+                url: "https://192.168.75.13/api/v2/users/logout",
+                type: "POST",
+                contentType: "application/json",
+                headers: {
+                    "Accept": "application/json",
+                    'Authorization': token,
+                },
+                data: "{ \"pseudo\" : \"" + pseudo + "\" }",
+                error: function (resultat, statut, error) {
+                }
+
+            }).done(function () {
+            });
+
+        if (checkbox) {
+            //suprimer l'utilisateur
+        }
+
+
+        token = "";
+    }
+
 
 
 
