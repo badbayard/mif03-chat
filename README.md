@@ -46,6 +46,44 @@ BEAUCOUP de fonctionnalitées sont encore totalement buggées (notamment les com
 Nous avons fais au mieux et ce TP sera surement poursuivi d'ici le TP5. 
 (to be continued ...)
 
-#### VM
+##### Programmation côté client
+Notre client dispose de différents fichier qui sont:
+- ajax.js
+- index.html
+- jquery-3.4.1.min.js
+- mustache.js
+- time.jsp
+
+l'interface du client se trouve dans index.html, et le code JS pour lancer et traiter le ajax se trouve dans le fichier
+ajax.js, le client dispose de feuille de style bootstrap.
+Elle se compose d'un menu avec différents éléments (accueil, groupes, groupe, billet, utilisateurs,déconnexion).
+- Accueil : on trouve un champ pour enregistrer le pseudo qui l'ajoute avec une requete ajax sur la vm
+- Groupes : si un utilisateur est connecté , il permet de lister les groupes pour notre utilisateur , on peux egalement créer un nouveau groupe.
+- Groupe : avant de cliquer sur groupe il faut etre connecté, permet de créer ou récuperer un billet.
+On récupere le billet en laissant les champs du formulaire vide.
+- Billet : permet d'ajouter un commentaire et de voir la liste des commentaires.
+- Utilisateur : permet d'afficher la liste des utilisateurs.
+- Déconnexion: permet de déconnecter l'utilisateur en cours.
+
+
+###### cas d'utilisation
+pour l'utilisation il faut d'abord créer un utilisateur ---> créer un groupe ---> créer un billet
+quand on a créer un utilisateur on peut ensuite faire les GET pour avoir la liste de groupes ou utilisateur.
+
+Le code de l'horloge se trouve dans ajax.js, mais n'est pas lancé.
+
+##### VM
 - http://192.168.75.33:8080/v1/
+- https://192.168.75.33/api/v1/
 - http://192.168.75.33:8080/v2/
+- https://192.168.75.33/api/v2/
+- http://192.168.75.33:8080/v3/
+- https://192.168.75.33/api/v3/ (ouvre sur le index classique et pas sur le client)
+
+pour accéder au client :
+
+- https://192.168.75.33/api/v3/client/index.html (page blanche on ne peut pas se balader dans le client en https)
+
+ou 
+
+- http://192.168.75.33:8080/v3//client/index.html (marche et vas sur le index.html du client)

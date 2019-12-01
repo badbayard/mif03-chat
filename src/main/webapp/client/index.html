@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <title>Mes Copains !</title>
+    <meta charset="UTF-8">
+    <script src="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="mustache.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   <style>
+        .active {display: block;}
+        .inactive{display: none;}
+    </style>
+
+    <script>
+
+        function show(hash){
+            $('.active')
+                .removeClass('active')
+                .addClass('inactive');
+            $(hash)
+                .removeClass('inactive')
+                .addClass('active');
+        }
+
+    </script>
+
+
+    <!-- test mustache -->
+    <script id ="template">
+
+    </script>
+
+    <div id="mu">
+
+    </div>
+
+</head>
+<!-- <body onload="loadXMLAsynchroneously('GET','http://localhost:8080/client/time.jsp',null,'timeDiv')"> -->
+<body>
+<h1>Mes Copains (en AJAX) !</h1>
+<div id="errMsg"></div>
+<aside>
+    <h2>Menu</h2>
+    <ul class="list-group">
+        <li class="list-group-item"><a href='#index'>Accueil</a></li>
+        <li class="list-group-item"><a href='#groupes' onclick="select('groupes')">Groupes</a></li>
+        <li class="list-group-item"><a href='#grp' onclick="select('groupe')">Groupe</a></li>
+        <li class="list-group-item"><a href='#billet' onclick="select('billet')">Billet</a></li>
+        <li class="list-group-item"><a href='#users' onclick="select('users')" >Utilisateurs </a></li>
+        <li class="list-group-item"><a href='#deco'>Déconnexion</a></li>
+    </ul>
+</aside>
+<section id='index' class='active'>
+    <h2>Bienvenue sur Chatons.org</h2>
+    <form method="post" href="#" name="pseudo" >
+            <p>Entrez votre pseudo :
+                <input type="text" name="pseudo" class="form-control left-rounded" id ="pseudo">
+                <button type="button" value="Connexion" class="btn btn-success" onclick="select('pseudo')" >Connexion</button> <!-- bouton -->
+            </p>
+    </form>
+</section>
+<section id='groupes' class='inactive'>
+    <h2>Liste des groupes</h2>
+    <!-- Pour chaque élément de la liste, l'interface doit proposer à l'utilisateur de :
+        - s'inscrire au groupe
+        - se désinscrire du groupe
+        - accéder au groupe
+        - supprimer le groupe
+        Les résultats de l'opération invoquée par le client seront affichés dans le div "errMsg" -->
+    <ul id='groupesList' class="list-group"></ul>
+    <form method="post" action="CreateGroupe" name="groupe">
+        <p>Créer un nouveau groupe :
+            <input placeholder="nom groupe" type="text" name="groupe" class="form-control left-rounded" id="groupe">
+            <input placeholder="descrciption" type="text" name="desc" class="form-control left-rounded" id="desc">
+            <button type="button" value="Créer" class="btn btn-success" onclick="select('groupes')">envoyer </button>
+        </p>
+    </form>
+    <p><a href='#deco'>Déconnexion</a></p>
+</section>
+<section id='grp' class='inactive'>
+    <h2>Groupe ...</h2>
+    <h3>Description</h3>
+    <p id="grpDesc"></p>
+    <h3>Billets</h3>
+    <!-- Pour chaque élément de la liste, l'interface doit proposer à l'utilisateur de :
+        - visualiser le billet
+        - modifier le titre du billet (aide : attribut contenteditable)
+        - supprimer le billet
+    -->
+    <ul id='bltList' class="list-group"></ul>
+    <hr>
+    <form method='post' >
+        <p>Créer un nouveau billet :
+            <input type='text' name='titre' id ="titre">
+            <textarea name="contenu" id ="contenu"></textarea>
+            <!--input type='submit' value='Envoyer' onclick="select('billets')" class="btn btn-primary"!-->
+            <button type="button" value="Envoyer" class="btn btn-success" onclick="select('billets')">Envoyer </button>
+        </p>
+    </form>
+    <p><a href='#groupes'>Liste des groupes</a></p>
+</section>
+<section id='billet' class='inactive'>
+    <p>Ceci est un billet de <span id='bltAuteur'></span>.</p>
+    <h1 id="bltTitre"/></h1>
+    <div class="contenu" id="bltContenu"></div>
+    <h2>Commentaires</h2>
+    <!-- Pour chaque élément de la liste, l'interface doit proposer à l'utilisateur de :
+        - modifier le commentaire
+        - supprimer le commentaire
+    -->
+    <ul id='commentList' class="list-group"></ul>
+    <form method="post" name="commentaire">
+        <p>Ajouter un commentaire :
+            <input type="text" name="commentaire" id="commentaire">
+            <button type="button" value="Envoyer" class="btn btn-success" onclick="select('commentaire')">Envoyer </button>
+        </p>
+    </form>
+    <p><a href="#groupe">Retour au groupe</a></p>
+    <p><a href="Deco">Se déconnecter</a></p>
+</section>
+<section id='users' class='inactive'>
+    <h2>Liste des utilisateurs</h2>
+    <!-- Rien de particulier à faire ici, juste lister les pseudos. -->
+    <ul id='usersList' class="list-group"></ul>
+    <p><a href='#deco'>Déconnexion</a></p>
+</section>
+<section id='deco' class='inactive'>
+    <h2>Déconnexion</h2>
+    <form method="post">
+        <p>Validez ce formulaire pour vous déconnecter :
+            <input type="checkbox" name="user" id ="chkbox"> Supprimer l'utilisateur
+            <!--input type="submit" value="Deconnexion" class="btn btn-primary"!-->
+            <button type="button" value="Deconnexion" class="btn btn-success" onclick="select('deco')">Envoyer </button>
+        </p>
+    </form>
+    <p><a href='#index'>Retour à la page d'accueil</a></p>
+</section>
+
+<div id="timeDiv">Affichez l'heure ici...</div>
+
+<script>
+    //magique !!!
+    window.addEventListener(
+        'hashchange',
+        () => { show(window.location.hash); }
+        );
+</script>
+<script type="text/javascript" src="ajax.js" ></script>
+</body>
+</html>
