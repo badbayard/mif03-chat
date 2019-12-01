@@ -112,6 +112,7 @@ function select(action) {
             var output_groupes = Mustache.render("Groupes : " +
                 "<li class=\"list-group-item\">"+"{{#groupes}} " + "<br/> {{.}} " + "{{/groupes}}" + "</li>", Groupes);
             $('#groupesList').html(output_groupes);
+
         });
 
         if(name_groupe != ""){
@@ -128,6 +129,7 @@ function select(action) {
                 }
             }).done(function (data,response , head) {
                 console.log("ok POST groupe")
+                alert("Groupe " + name_groupe + " ok");
             });
         }
     }
@@ -189,6 +191,7 @@ function select(action) {
             };
             var output = Mustache.render("Pseudo {{pseudo}}",Pseudo);
             $('#mu').html(output);
+            alert("pseudo " + pseudo + " ok");
         });
 
     }
@@ -220,75 +223,9 @@ function select(action) {
             token = head.getResponseHeader("Authorization");
         });
 
-
-        /*
-        $.ajax({
-            url:"https://192.168.75.13/api/v2/users/login",
-            type: "POST",
-            contentType:"application/json",
-            headers: {
-                "Accept":"application/json",
-                'Authorization': token,
-                //"Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0b3RvIiwiYXVkIjoiaHR0cHM6Ly8xOTIuMTY4Ljc1LjEzL2FwaS92MiIsImNvciI6IkNvcnJlY3Rpb24iLCJpc3MiOiJNZXMgQ29wYWlucyIsImV4cCI6MTU3NDg3NDk4NH0.-WrGFuY-9BlSe6HuGIbmW-zmgXH7D7kEu1lMDjaIc_k"
-                //mettre autho pour get les autres sinon on peut recup que les groupes
-
-
-            },
-            data: "{ \"pseudo\" : \"toto\" }",
-            error: function (resultat, statut, error) {
-                console.log("je suis la");
-                console.log(statut);
-            }
-
-        }).done(function (data,response , head) {
-            console.log(head.getResponseHeader("Authorization"));
-            token = head.getResponseHeader("Authorization");
-        });
-
-
-
-        $.ajax({
-           url:"https://192.168.75.13/api/v2/groupes/toto",
-           type: "GET",
-            headers: {
-               "Accept":"application/json",
-                //'Authorization': token,
-                //"Authorization": token,
-                beforeSend: function(request) {
-                    request.setRequestHeader("Authorization", token);
-                },
-                //mettre autho pour get les autres sinon on peut recup que les groupes
-
-
-            },
-            error: function (resultat, statut, error) {
-                console.log("token : " + token)
-                console.log(statut);
-            }
-        }).done(function (data,response , head) {
-            console.log("ok dans le Get")
-        });
-
-
-        //var output = Mustache.render("titre {{titre}} contenue {{contenue}} auteur {{auteur}} commentaire {{commentaire}}", billet);
-        var output_titre = Mustache.render("{{titre}}",billet);
-        var output_contenue = Mustache.render("{{contenue}}",billet);
-        var output_auteur = Mustache.render("{{auteur}}",billet);
-        //var output_commentaire = Mustache.render("{{commentaire}}",billet);
-        var output_commentaire = Mustache.render("{{#commentaire}} " + "<br/> {{.}} " + "{{/commentaire}}", billet);
-
-        $('#bltTitre').html(output_titre);
-        $('#commentList').html(output_commentaire);
-        $('#bltContenu').html(output_contenue);
-        $('#bltAuteur').html(output_auteur);
-        */
     }
 
-    if(action == "commentaire"){
-        console.log("je suis dans le if de commentaire");
-        var commentaire =  $('#commentaire').val();
-        console.log("contenue du commentaire : "+commentaire);
-    }
+
 
     if(action == 'billets') {
         var titre ="";
@@ -336,8 +273,40 @@ function select(action) {
             }).done(function () {
                 console.log("ok POST billets")
                 index_billet = index_billet + 1;
+                alert("billet ok");
             });
         }
+    }
+
+    if(action == "commentaire"){
+        console.log("je suis dans le if de commentaire");
+        var commentaire =  $('#commentaire').val();
+        console.log("contenue du commentaire : "+commentaire);
+
+        $.ajax({
+            url: "https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets/"+index_billet+"/commentaires",
+            type: "GET",
+            headers: {
+                "Accept": "application/json",
+                'Authorization': token,
+            },
+            sucess: function (data) {
+                console.log(data);
+            },
+            error: function (resultat, statut, error) {
+                console.log(statut);
+            }
+        }).done(function (data) {
+            var commentaires = {
+                commentaires: data
+            };
+            var output_commentaires = Mustache.render("{{#commentaires}} " + "<br/> {{.}} " + "{{/commentaires}}", commentaires);
+            $('#commentList').html(output_commentaires);
+            });
+
+
+
+
     }
 
     if(action == 'deco') {
