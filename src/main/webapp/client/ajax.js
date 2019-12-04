@@ -1,36 +1,42 @@
 var token;
 var name_groupe="";
 var index_billet = -1 ;
-function hello() {
-    console.log("hello world");
-}
-
+var name;
 function refresh() {
     setTimeout("refresh();",5000);
 }
 
-function gettoken() {
-    $.ajax({
-        url:"https://192.168.75.13/api/v2/users/login",
-        type: "POST",
-        contentType:"application/json",
-        headers: {
-            "Accept":"application/json",
-            'Authorization': token,
-        },
-        data: "{ \"pseudo\" : \"toto\" }",
-        sucess : function (data,response) {
-        },
-        error: function (resultat, statut, error) {
-        }
-
-    }).done(function (data,response , head) {
-        token = head.getResponseHeader("Authorization");
-    });
-}
-//gettoken();
-
 function select(action) {
+
+    if(action == "pseudo") {
+       var p =  $('#pseudo').val();
+       name = p;
+        $.ajax({
+            url:"https://192.168.75.13/api/v2/users/login",
+            type: "POST",
+            contentType:"application/json",
+            headers: {
+                "Accept":"application/json",
+                'Authorization': token,
+            },
+            data: "{ \"pseudo\" : \""+p+"\" }",
+            error: function (resultat, statut, error) {
+            }
+
+        }).done(function (data,response , head) {
+            token = head.getResponseHeader("Authorization");
+            
+            var _pseudo = {
+                pseudo: p
+            };
+            var output = Mustache.render("Pseudo {{pseudo}}",_pseudo);
+            $('#mu').html(output);
+            alert("pseudo " + p + " ok");
+        });
+    }
+
+
+
 
     if(action == "groupe") {
         /*
@@ -86,6 +92,7 @@ function select(action) {
 
 
     if(action == "groupes") {
+        console.log(name);
         name_groupe = null;
         name_groupe =  $('#groupe').val();
         var desc = $('#desc').val();
@@ -96,17 +103,12 @@ function select(action) {
                 "Accept":"application/json",
             },
             sucess : function (data) {
-                console.log("j'ai reussi");
-                console.log("voici la data " + data);
             },
             error: function (resultat, statut, error) {
                 console.log("token : " + token)
                 console.log(statut);
             }
         }).done(function (data,response , head) {
-            console.log("Get groupe OK")
-            console.log(response);
-            console.log("data" + data);
             var Groupes = {
                 groupes: data
             };
@@ -129,7 +131,6 @@ function select(action) {
                 error: function (resultat, statut, error) {
                 }
             }).done(function (data,response , head) {
-                console.log("ok POST groupe")
                 alert("Groupe " + name_groupe + " ok");
             });
         }
@@ -157,9 +158,6 @@ function select(action) {
                 console.log(statut);
             }
             }).done(function (data,response , head) {
-                console.log("Get user OK")
-                console.log(response);
-                console.log("data" + data);
                 var Users = {
                     users: data
                 };
@@ -168,39 +166,8 @@ function select(action) {
             });
     }
 
-
-
-    if(action == "pseudo") {
-
-        var pseudo =  $('#pseudo').val();
-        $.ajax({
-            url:"https://192.168.75.13/api/v2/users/login",
-            type: "POST",
-            contentType:"application/json",
-            headers: {
-                "Accept":"application/json",
-                'Authorization': token,
-            },
-            data: "{ \"pseudo\" : \""+pseudo+"\" }",
-            error: function (resultat, statut, error) {
-            }
-
-        }).done(function (data,response , head) {
-            token = head.getResponseHeader("Authorization");
-            var Pseudo = {
-                pseudo: pseudo
-            };
-            var output = Mustache.render("Pseudo {{pseudo}}",Pseudo);
-            $('#mu').html(output);
-            alert("pseudo " + pseudo + " ok");
-        });
-
-    }
-
-
-
     if(action == "billet") {
-        console.log(name_groupe);
+        //console.log(name_groupe);
         var billet = {
             titre: "mon billet",
             contenue: " voici mon contenue",
@@ -220,8 +187,6 @@ function select(action) {
                 console.log(statut);
             }
         }).done(function (data,response , head) {
-            console.log(head.getResponseHeader("Authorization"));
-            token = head.getResponseHeader("Authorization");
         });
 
     }
@@ -232,9 +197,8 @@ function select(action) {
         var titre ="";
         titre =  $('#titre').val();
         var desc = $('#contenu').val();
-
         console.log("titre : " + titre + " contenu : " + desc );
-
+        //console.log(" name groupe : " + name_groupe+"Index billet :" + index_billet);
         if(titre == "") {
             $.ajax({
                 url: "https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets/"+index_billet,
@@ -272,7 +236,6 @@ function select(action) {
                 error: function (resultat, statut, error) {
                 }
             }).done(function () {
-                console.log("ok POST billets")
                 index_billet = index_billet + 1;
                 alert("billet ok");
             });
@@ -280,36 +243,57 @@ function select(action) {
     }
 
     if(action == "commentaire"){
-        var commentaire =  $('#commentaire').val();
-        console.log("la valeur du token : "+token);
-        $.ajax({
-            url: "https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets/"+index_billet+"/commentaires",
-            type: "GET",
-            headers: {
-                "Accept": "application/json",
-                'Authorization': token,
-            },
-            sucess: function (data) {
-                console.log(data);
-            },
-            error: function (resultat, statut, error) {
-                console.log(statut);
-            }
-        }).done(function (data) {
-            var commentaires = {
-                commentaires: data
-            };
-            var output_commentaires = Mustache.render("{{#commentaires}} " + "<br/> {{.}} " + "{{/commentaires}}", commentaires);
-            $('#commentList').html(output_commentaires);
+        var commentaire ="";
+        commentaire =  $('#commentaire').val();
+        //console.log("la valeur du token : "+token);
+        if(commentaire != "") {
+            $.ajax({
+                url: "https://192.168.75.13/api/v2/groupes/" + name_groupe + "/billets/" + index_billet + "/commentaires",
+                type: "POST",
+                contentType:"application/json",
+                headers: {
+                    "Accept": "application/json",
+                    'Authorization': token,
+                },
+                data: "{ \"auteur\" : \""+name+"\" " + ", \"texte\" : \""+commentaire+"\" }",
+                sucess: function (data) {
+                    console.log(data);
+                },
+                error: function (resultat, statut, error) {
+                    console.log(statut);
+                }
+            }).done(function (data) {
             });
 
+        }else{
 
+            $.ajax({
+                url: "https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets/"+index_billet+"/commentaires",
+                type: "GET",
+                contentType:"application/json",
+                headers: {
+                    "Accept": "application/json",
+                    'Authorization': token,
+                },
+                sucess: function (data) {
+                },
+                error: function (resultat, statut, error) {
+                    console.log(statut);
+                }
+            }).done(function (data) {
+                var commentaires = {
+                    commentaires: data
+                };
+                var output_commentaires = Mustache.render("{{#commentaires}} " + "<br/> {{.}} " + "{{/commentaires}}", commentaires);
+                $('#commentList').html(output_commentaires);
+            });
+
+        }
 
 
     }
 
     if(action == 'deco') {
-        console.log("deco");
         var checkbox =   $('#chkbox').is(":checked");
         var pseudo =  $('#name').val();
 
@@ -332,7 +316,7 @@ function select(action) {
             //suprimer l'utilisateur
         }
 
-
+        name = "";
         token = "";
     }
 
