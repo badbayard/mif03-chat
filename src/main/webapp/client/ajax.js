@@ -200,6 +200,7 @@ function select(action) {
         console.log("titre : " + titre + " contenu : " + desc );
         //console.log(" name groupe : " + name_groupe+"Index billet :" + index_billet);
         if(titre == "") {
+            /*
             $.ajax({
                 url: "https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets/"+index_billet,
                 type: "GET",
@@ -221,6 +222,33 @@ function select(action) {
                 var output_billets = Mustache.render("<li class=\"list-group-item\">" + "{{#billets}} " +"<cite contenteditable=\"true\">" + "<br/> {{titre}} "+" "+" {{contenu}} " + "<cite>" + "{{/billets}}" + "</li>", Groupe);
                 $('#bltList').html(output_billets);
             });
+            */
+
+            fetch("https://192.168.75.13/api/v2/groupes/"+name_groupe+"/billets/"+index_billet , {
+                method : "GET",
+                mode: "cors",
+                headers :{
+                    "Accept":"application/json",
+                    'Authorization': token,
+                }
+            })
+                .then(response=> {
+                    if(response.ok) {
+                        console.log("ok");
+                        var Groupe = {
+                            billets: response.body
+                        };
+                        var output_billets = Mustache.render("<li class=\"list-group-item\">" + "{{#billets}} " +"<cite contenteditable=\"true\">" + "<br/> {{titre}} "+" "+" {{contenu}} " + "<cite>" + "{{/billets}}" + "</li>", Groupe);
+                        $('#bltList').html(output_billets);
+                    }
+                    throw new Error('ErreurHTTP : ' + response.status);})
+                .then(text=> {
+                    console.log('Corps de la réponse :', text); })
+                .catch(error=> {
+                    console.log('Erreur dans la réception de la requête : ', error);
+                });
+
+
         }
         else {
 
