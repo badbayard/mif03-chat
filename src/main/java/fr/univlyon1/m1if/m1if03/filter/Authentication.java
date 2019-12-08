@@ -41,12 +41,12 @@ public class Authentication extends HttpServlet implements Filter {
 
         //String token = request.getParameter("token");
         String token = (String)request.getAttribute("token");
-        System.out.println("token dans auth = " + token);
+        //System.out.println("token dans auth = " + token);
         if(token != null) {
-            System.out.println("token dans auth = " + token);
+            //System.out.println("token dans auth = " + token);
             DecodedJWT jwt = JWT.decode(token);
             String contentType = jwt.getContentType();
-            System.out.println("token_after = " + contentType);
+            //System.out.println("token_after = " + contentType);
             Algorithm algorithm = Algorithm.HMAC256("secret");
             JWTVerifier verifier = JWT.require(algorithm).build();
         }

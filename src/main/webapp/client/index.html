@@ -54,9 +54,9 @@
 </aside>
 <section id='index' class='active'>
     <h2>Bienvenue sur Chatons.org</h2>
-    <form method="post" href="#" name="pseudo" >
+    <form method="post" href="#" name="p" >
             <p>Entrez votre pseudo :
-                <input type="text" name="pseudo" class="form-control left-rounded" id ="pseudo">
+                <input type="text" name="p" class="form-control left-rounded" id ="pseudo">
                 <button type="button" value="Connexion" class="btn btn-success" onclick="select('pseudo')" >Connexion</button> <!-- bouton -->
             </p>
     </form>
@@ -94,6 +94,7 @@
     <form method='post' >
         <p>Créer un nouveau billet :
             <input type='text' name='titre' id ="titre">
+            <!-- <input type='text' name='contenu' id ="contenu"> -->
             <textarea name="contenu" id ="contenu"></textarea>
             <!--input type='submit' value='Envoyer' onclick="select('billets')" class="btn btn-primary"!-->
             <button type="button" value="Envoyer" class="btn btn-success" onclick="select('billets')">Envoyer </button>
