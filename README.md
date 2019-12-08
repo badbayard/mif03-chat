@@ -79,11 +79,15 @@ Le code de l'horloge se trouve dans ajax.js, mais n'est pas lancé.
 - https://192.168.75.33/api/v2/
 - http://192.168.75.33:8080/v3/
 - https://192.168.75.33/api/v3/ (ouvre sur le index classique et pas sur le client)
+- http://192.168.75.33:8080/v4/ (second rendu du Tp client)
+- https://192.168.75.33/api/v4
 
 pour accéder au client :
 
 - https://192.168.75.33/api/v3/client/index.html (page blanche on ne peut pas se balader dans le client en https)
+- https://192.168.75.33/api/v4/client/index.html
 
 ou 
 
 - http://192.168.75.33:8080/v3//client/index.html (marche et vas sur le index.html du client)
+- http://192.168.75.33:8080/v4//client/index.html
