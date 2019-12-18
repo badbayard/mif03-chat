@@ -91,3 +91,54 @@ ou
 
 - http://192.168.75.33:8080/v3//client/index.html (marche et vas sur le index.html du client)
 - http://192.168.75.33:8080/v4//client/index.html
+
+nginx (redirige sur le client pour les requetes AJAX)
+- https://192.168.75.33/
+
+
+#### performance
+
+##### en local sur tomcat
+###### application sans optmisaion
+
+|HTML|App shell|CRP|
+|-------------|:-------------:|---------:|
+|46,7399291992|390,9899291992 |398,4899291992|
+
+
+###### avec l'attribut async
+
+|HTML|App shell|CRP|
+|-------------|:-------------:|---------:|
+|42,5799560547|357,3299560547|364,3299560547|
+|9% ->amélioration|9%->amélioration|9%->amélioration|
+
+##### avec minimisation des ressources critiques 
+
+|HTML|App shell|CRP|
+|-------------|:-------------:|---------:|
+|45,7274780273|408,4774780273|416,2274780273|
+|-7%|-14%|-14%|
+
+##### sur la VM avec nginx
+###### application sans optmisaion
+Pour ces tests on passe par le VPN de l'université.
+
+|HTML|App shell|CRP|
+|-------------|:-------------:|---------:|
+|80,5406494141|517,0406494141|523,7906494141|
+
+###### avec l'attribut async
+|HTML|App shell|CRP|
+|-------------|:-------------:|---------:|
+|77,7641601563 |498,0141601563|506,5141601563|
+|4%->amélioration|4%->amélioration|4%->amélioration|
+
+###### avec minimisation des ressources critiques
+|HTML|App shell|CRP|
+|-------------|:-------------:|---------:|
+|61,0983276367|462,0983276367|471,0983276367|
+|21%->amélioration|8%->amélioration|7%->amélioration|
+
+
+
