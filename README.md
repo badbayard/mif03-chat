@@ -56,17 +56,17 @@ Nous avons fais au mieux et ce TP sera surement poursuivi d'ici le TP5.
 
 
 POST : 
-http://localhost:8080/Groupes
-http://localhost:8080/Users
-http://localhost:8080/Users/toto/grp/saisie.html
-http://localhost:8080/Users/toto/grp/NewBillet
-http://localhost:8080/Users/toto/grp/Commentaire
+- http://localhost:8080/Groupes
+- http://localhost:8080/Users
+- http://localhost:8080/Users/toto/grp/saisie.html
+- http://localhost:8080/Users/toto/grp/NewBillet
+- http://localhost:8080/Users/toto/grp/Commentaire
 
 
 GET :
-http://localhost:8080/Users/toto/grp
-http://localhost:8080/Users/toto/grp/NewBillet/titre
-http://localhost:8080/Users/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwc2V1ZG8iLCJpbmRleCI6MCwiZ3JvdXBlIjoiZ3JwIn0.pcGMOwAU29YuwGHX-ildlASYoyJxO4gx8_ueptb1YyA
+- http://localhost:8080/Users/toto/grp
+- http://localhost:8080/Users/toto/grp/NewBillet/titre
+- http://localhost:8080/Users/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwc2V1ZG8iLCJpbmRleCI6MCwiZ3JvdXBlIjoiZ3JwIn0.pcGMOwAU29YuwGHX-ildlASYoyJxO4gx8_ueptb1YyA
 
 #####Section TP5 & TP7
 #####TP5
