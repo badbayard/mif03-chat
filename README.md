@@ -1,7 +1,11 @@
 # mif03-chat
+#####Préambule
+Monteix Yann 11522747
+Hutt Yannis 11408376
 
+#####Section TP2 & TP3
 tag TP - 1.4
-##### question 1.2 Quel est le type de redirection que vous devez employer pour cela ? 
+###### question 1.2 Quel est le type de redirection que vous devez employer pour cela ? 
 On ne traite pas les données d'un formulaire donc on ne passe pas par un 
 doPost, donc on fait un doGet
 
@@ -10,20 +14,22 @@ defaillance pour la deconnexion, quand un utilisateur se déconnecte, le
 prochain utilisateur se vera sur sa page de connexion le dernier billet 
 de l'utilisateur precedent.
 
+######TP2
+Application de blog fonctionnelle mais avec la quasi totalitée du code dans notre JSP billet.jsp.
 
-##### Notre MVC push-based
+###### Notre MVC push-based
 les Vues se trouvent dans le dossier JSP, le contrôleur est séparé dans plusieurs 
 classe java se trouvent dans le package servlets, et le model se trouve dans le package classes, 
 le contrôleur est chargé d'affecter le model et d'orienter les vues.
 
-##### Notre MVC
+###### Notre MVC
 Les Vues se trouvent dans le dossier JSP, le contrôleur est séparé 
 dans plusieurs classe java se trouvent dans le package servlets, 
 et le model se trouve dans le package classes, le contrôleur est 
 chargé d'affecter le model et d'orienter les vues.
 
 
-##### Gestion du cache
+###### Gestion du cache
 Les ressources statiques sont bien mises en caches lors des rafraichissement,
 mais on a un souci avec les ressources dynamiques , notre site n'est requeté qu'avec des 
 POST et n'appelle pas les GET. 
@@ -31,7 +37,9 @@ La gestion des headers HTTP a été effectué sur la servlet Init.
 La gestion des cookies est implémenté mais "casse le site" , car en effet le 
 doGet n'est pas appelé en temps normal. Il est implémenté sur les commentaires.
 
-##### REST
+#####Section TP4
+
+###### REST
 Beaucoup de cas d'URL non geré, actuellement les GET sont fonctionnels (normalement) , 
 si on crées des utilisateurs via l'application puis on les récuperes :
 - http://localhost:8080/Users/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0b3RvIiwiaW5kZXgiOjAsImdyb3VwZSI6InR1dHUifQ.yYxblwbTUUY6eITMGX5ypyH-zPOCG_kAIvF5dRuQriw
@@ -46,7 +54,30 @@ BEAUCOUP de fonctionnalitées sont encore totalement buggées (notamment les com
 Nous avons fais au mieux et ce TP sera surement poursuivi d'ici le TP5. 
 (to be continued ...)
 
+
+POST : 
+http://localhost:8080/Groupes
+http://localhost:8080/Users
+http://localhost:8080/Users/toto/grp/saisie.html
+http://localhost:8080/Users/toto/grp/NewBillet
+http://localhost:8080/Users/toto/grp/Commentaire
+
+
+GET :
+http://localhost:8080/Users/toto/grp
+http://localhost:8080/Users/toto/grp/NewBillet/titre
+http://localhost:8080/Users/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwc2V1ZG8iLCJpbmRleCI6MCwiZ3JvdXBlIjoiZ3JwIn0.pcGMOwAU29YuwGHX-ildlASYoyJxO4gx8_ueptb1YyA
+
+#####Section TP5 & TP7
+#####TP5
 ##### Programmation côté client
+
+Nous avons implementés des requetes Ajax (ou Fetch) pour requeter votre VM.
+Tous les Get et POST sont implementées en AJAX a l'exeption d'une URL qui est requeté en Fetch :
+- https://192.168.75.13/api/v2/groupes/name_groupe/billets/index_billet
+
+Dans notre projet se trouve un fichier ajax.source.js qui a été necessaire pour la compression de notre fichier ajax.js (cf TP7).
+
 Notre client dispose de différents fichier qui sont:
 - ajax.js
 - index.html
@@ -72,7 +103,11 @@ quand on a créer un utilisateur on peut ensuite faire les GET pour avoir la lis
 
 Le code de l'horloge se trouve dans ajax.js, mais n'est pas lancé.
 
-##### VM
+###### VM
+
+Nous n'avons pas modifié les logins de la VM le mot de passe est toujours etudiant.
+
+
 - http://192.168.75.33:8080/v1/
 - https://192.168.75.33/api/v1/
 - http://192.168.75.33:8080/v2/
@@ -96,24 +131,27 @@ nginx (redirige sur le client pour les requetes AJAX)
 - https://192.168.75.33/
 
 
-#### performance
+#####TP7
+ApppShell : Nous n'avons pas d'appShell tout notre DOM est notre appShell.
+
+CRP : index.html et bootstrap.css
 
 ##### en local sur tomcat
-###### application sans optmisaion
+######application sans optimisation
 
 |HTML|App shell|CRP|
 |-------------|:-------------:|---------:|
 |46,7399291992|390,9899291992 |398,4899291992|
 
 
-###### avec l'attribut async
+######avec l'attribut async
 
 |HTML|App shell|CRP|
 |-------------|:-------------:|---------:|
 |42,5799560547|357,3299560547|364,3299560547|
 |9% ->amélioration|9%->amélioration|9%->amélioration|
 
-##### avec minimisation des ressources critiques 
+######avec minimisation des ressources critiques 
 
 |HTML|App shell|CRP|
 |-------------|:-------------:|---------:|
@@ -121,7 +159,7 @@ nginx (redirige sur le client pour les requetes AJAX)
 |-7%|-14%|-14%|
 
 ##### sur la VM avec nginx
-###### application sans optmisaion
+######application sans optimisation
 Pour ces tests on passe par le VPN de l'université.
 
 |HTML|App shell|CRP|
